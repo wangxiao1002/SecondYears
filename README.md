@@ -7,7 +7,17 @@
 服务注册中心有很多，做微服务项目以来，从开始的Zk,到使用阿里nacos,还有eurake。
 使用@EnableDiscoveryClient 都可以将服务注册到注册中心上去，是因为SpringCloud 提供良好的抽象配置，DiscoveryClient bean 均可获取服务信息。</br>
 这里搭建Eurake Server 集群是因为之前的技术leader告诫过用Eurake 使用集群方式更好，单个Eurake远远不如nacos,Eurake集群方式思想就是你中有我、我中有你。
+Eurake server1向注册EurakeServer2 注册，2则反之。
 
 ## 网关 zuul filter
-使用Zuul 做网关是我第一次接触网关服务，据说现在好多都抛弃Zuul 因为实现是通过Servlet，再做百度noah网关时候做了统一认证、鉴权。
-鉴权思想 角色控制菜单渲染、角色控制请求地址，拦截用户请求地址 uri + method 然后做匹配。后期优化使用SpringCache 对权限点做缓存</br>
+使用Zuul做网关是我第一次接触微服务就是用的架构服务，据说现在好多都抛弃Zuul 可能是因为zuul是通过Servlet来实现</br>
+在zuul网关中做了统一认证、鉴权、异常处理。
+鉴权思想:用户关联角色，，角色控制菜单渲染、角色控制请求地址，请求地址是权限点拦截用户请求地址 method*uri与数据库配置的这个地址匹配(当然数据配置是方法名*地址,eg:GET*/auth/user/login)</br>
+匹配工具使用AntPathMather使用规则如下:</br>
+可以做URLs匹配，规则如下
+
+1. ?匹配一个字符
+2. *匹配0个或多个字符
+3. **匹配0个或多个目录 </br>
+使用eg:pathMatcher.match(patternUrl,uri)
+后期优化使用SpringCache 对权限点做缓存</br>
