@@ -13,9 +13,9 @@ import java.util.List;
  */
 
 @Component
-@PropertySource(value = "classpath:permission.yml")
-@ConfigurationProperties(prefix = "permission")
-public class PermissionConfig {
+@PropertySource("classpath:pattern.properties")
+@ConfigurationProperties(prefix = "pattern")
+public class PatternConfig {
 
 
     private List<String> patternList ;
@@ -35,5 +35,18 @@ public class PermissionConfig {
 
     public List<String> getBlackList() {
         return blackList;
+    }
+
+
+    public void setPatternList(List<String> patternList) {
+        this.patternList = patternList;
+    }
+
+    public void setWhiteList(List<String> whiteList) {
+        this.whiteList = whiteList;
+    }
+
+    public void setBlackList(List<String> blackList) {
+        this.blackList = blackList;
     }
 }

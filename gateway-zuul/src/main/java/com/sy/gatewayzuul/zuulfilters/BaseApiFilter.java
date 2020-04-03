@@ -1,6 +1,5 @@
 package com.sy.gatewayzuul.zuulfilters;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
@@ -27,7 +26,9 @@ import java.util.List;
 public abstract class BaseApiFilter extends ZuulFilter {
 
 
-    protected  Logger log = LoggerFactory.getLogger("zuul");
+    private Logger log = LoggerFactory.getLogger("zuul");
+
+
 
 
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -41,6 +42,9 @@ public abstract class BaseApiFilter extends ZuulFilter {
     public BaseApiFilter(List<String> patternList, JwtTokenProvider jwtTokenProvider) {
         this.patternList = patternList;
         this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    public BaseApiFilter() {
     }
 
     @Override
@@ -58,14 +62,13 @@ public abstract class BaseApiFilter extends ZuulFilter {
             serverError(e);
             return null;
         }
-
     }
 
     /**
      *  拦截器具体实现功能
      * @return
      */
-    protected abstract Object doFilter();
+    protected abstract Object doFilter()throws Exception;
 
 
     /**
@@ -82,25 +85,36 @@ public abstract class BaseApiFilter extends ZuulFilter {
         return false;
     }
 
-    private String getUri(RequestContext context) {
+    protected String getUri(RequestContext context) {
         return context.getRequest().getRequestURI();
     }
 
 
     protected void serverError(Exception e){
         log.info("gateWay-zuul is error ,the message is :{}",e.getMessage());
-        RequestContext context = RequestContext.getCurrentContext();
-        context.setSendZuulResponse(false);
-        context.setResponseStatusCode(HttpStatus.SC_OK);
-        context.getResponse().setContentType(MediaType.APPLICATION_JSON_VALUE);
-        String json = "{\"status:\"fail}";
-        try  {
-            objectMapper.writeValueAsString(BaseResponse.build().status("fail").message("网关解析系统异常"));
-        }catch (JsonProcessingException e1) {
-            e1.printStackTrace();
-        }
-        context.setResponseBody(json);
+        sendBaseResponse(BaseResponse.build().status("fail").message("网关解析系统异常"));
     }
+
+    protected void nopermission (String id){
+        log.info("gateWay-zuul is no permission ,the request id is :{}",id);
+        sendBaseResponse(BaseResponse.build().status("fail").message("您好，您没有权限!"));
+    }
+
+     protected void sendBaseResponse (BaseResponse baseResponse) {
+         RequestContext context = RequestContext.getCurrentContext();
+         context.setSendZuulResponse(false);
+         context.setResponseStatusCode(HttpStatus.SC_OK);
+         context.getResponse().setContentType(MediaType.APPLICATION_JSON_VALUE);
+         context.getResponse().setCharacterEncoding("UTF-8");
+         String json = "{\"status:\"fail\"}";
+         try  {
+            json = objectMapper.writeValueAsString(baseResponse);
+         }catch (JsonProcessingException e1) {
+             e1.printStackTrace();
+         }
+         context.setResponseBody(json);
+
+     }
 
 
 

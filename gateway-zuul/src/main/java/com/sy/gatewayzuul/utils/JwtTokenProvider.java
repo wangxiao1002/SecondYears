@@ -4,12 +4,8 @@ package com.sy.gatewayzuul.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.Date;
@@ -22,7 +18,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JwtTokenProvider.class);
+
 
     public static final String COOKIE_NAME = "JWT_TOKEN";
 
@@ -45,7 +41,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public void setCookie(HttpServletRequest request, HttpServletResponse response,String token) {
+    public void setCookie(HttpServletResponse response,String token) {
         Cookie cookie = new Cookie(COOKIE_NAME,token);
         cookie.setMaxAge(-1);
         cookie.setHttpOnly(true);
@@ -61,8 +57,18 @@ public class JwtTokenProvider {
             return null;
         }
     }
-    public boolean isTokenExpired (Date expirationTime) {
-        return expirationTime.before(new Date());
+
+    public String getUserCode(String token){
+        return getTokenClaim(token).get("userCode",String.class);
     }
+    public boolean isTokenExpired (String token) {
+        return getTokenClaim(token).getExpiration().before(new Date());
+    }
+
+    public String refreshToken(String token) {
+        String userCode = getUserCode(token);
+        return createToken(userCode);
+    }
+
 
 }
