@@ -1,0 +1,7 @@
+permission:
+  patternList:
+    - /a/
+  whiteList:
+    - /a/login
+  blackList:
+    - /a/black
