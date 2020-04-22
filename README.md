@@ -21,3 +21,17 @@ Eurake server1向注册EurakeServer2 注册，2则反之。
 3. **匹配0个或多个目录 </br>
 使用eg:pathMatcher.match(patternUrl,uri)
 后期优化使用SpringCache 对权限点做缓存</br>
+
+
+##  自定义缓存模块
+redis在面试还是日常中经常用来做缓存，为了更加理解redis,自己动手实现缓存功能
+### 缓存数据结构选择
+使用ConcurrentHashMap,HashMap,HashTable都可以存储数据,区别是线程安全和是否允许为空。为实现简易化key不允许为空和保证并发先择ConcurrentHashMap作为底层的数据结构。
+### 缓存删除策略
+1. 定时删除。
+   在设置key,value,expireTime时候根据expireTime设置定时任务，到期删除
+2. 惰性删除
+   获取值时候判断是否过期
+3. 定期删除
+  定期去轮询超时时间判断是否过期
+ ### 持久化待更新
