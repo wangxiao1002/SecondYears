@@ -13,7 +13,7 @@
 6. 礼物商城
 7. 待完善
 </br>
-***准备工作***
+***准备工作***</br>
 ## Eurake Server 集群
 服务注册中心有很多，做微服务项目以来，从开始的Zk,到使用阿里nacos,还有eurake。
 使用@EnableDiscoveryClient 都可以将服务注册到注册中心上去，是因为SpringCloud 提供良好的抽象配置，DiscoveryClient bean 均可获取服务信息。</br>
@@ -46,6 +46,7 @@ redis在面试还是日常中经常用来做缓存，为了更加理解redis,自
 3. 定期删除
   定期去轮询超时时间判断是否过期
  ### 持久化待更新
- ***准备完毕***
+ </br>
+
  
  
