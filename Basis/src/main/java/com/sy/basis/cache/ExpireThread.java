@@ -11,9 +11,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/4/22
  */
 public class ExpireThread implements Runnable{
-
-
-    private static int count;
     @Override
     public void run() {
         while (true) {
@@ -27,7 +24,7 @@ public class ExpireThread implements Runnable{
     }
     private void cleanCache() {
         CacheEntity<?> cacheEntity = null;
-        for (Map.Entry<String,CacheEntity<?>> entry:  CacheManager.CACHE_POOL.entrySet()){
+        for (Map.Entry<String,CacheEntity> entry:  CacheManager.CACHE_POOL.entrySet()){
             String key = entry.getKey();
             cacheEntity = entry.getValue();
             long timeOut = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime()- cacheEntity.getCreateTime());
@@ -36,6 +33,6 @@ public class ExpireThread implements Runnable{
             }
             CacheManager.CACHE_POOL.remove(key);
         }
-        count++;
+
     }
 }

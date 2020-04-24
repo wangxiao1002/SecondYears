@@ -1,6 +1,6 @@
 package com.sy.basis.cache;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 
 /**
  * 系统缓存管理器
@@ -9,7 +9,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CacheManager {
 
-    protected static ConcurrentHashMap<String,CacheEntity<?>> CACHE_POOL = new ConcurrentHashMap<>(100);
+    protected static ConcurrentHashMap<String,CacheEntity> CACHE_POOL = new ConcurrentHashMap<>(100);
 
-    protected final static long DEFAULT_EXPIRE_TIME = 10000L;
+    protected final static long DEFAULT_EXPIRE_TIME = 1000*60L;
+
+    static {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        ExpireThread expireThread = new ExpireThread();
+        executorService.execute(expireThread);
+    }
+
+
+    public static void main(String[] args) {
+        CacheUtil.put("a","hello");
+        System.out.print(CacheUtil.containsKey("a"));
+        System.out.print(""+ CacheUtil.get("a"));
+    }
 }
