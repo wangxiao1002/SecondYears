@@ -1,0 +1,56 @@
+server:
+  port: 38080
+spring:
+  application:
+    name: zuulApplication
+eureka:
+  client:
+    service-url:
+      defaultZone: http://123.57.243.207:38091/eureka/,http://123.57.243.207:38090/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+
+ribbon:
+  ConnectTimeout: 5000
+  ReadTimeout: 60000
+  MaxAutoRetries: 2
+  MaxAutoRetriesNextServer: 1
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 200000
+
+zuul:
+  # 重试
+  retryable: true
+  add-proxy-headers: true
+  # 过滤头信息
+  #sensitive-headers:
+  host:
+    connect-timeout-millis: 5000
+    max-per-route-connections: 2000
+    max-total-connections: 50000
+    socket-timeout-millis: 60000
+  ignored-services: "*"
+  routes:
+    auth:
+      path: /auth/*
+      # 移除前缀
+      strip-prefix: true
+      service-id: authApplication
+    aa:
+#      path: /aut32/*
+      # 移除前缀
+      strip-prefix: true
+      url: http://127.0.0.1/aa
+
+
+
+
