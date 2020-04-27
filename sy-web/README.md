@@ -1,6 +1,6 @@
-# sy-web
+# Sy-web
 
-> sy-web
+> Sy-web  前端界面
 
 ## Build Setup
 
