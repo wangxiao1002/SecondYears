@@ -9,7 +9,7 @@ eureka:
     prefer-ip-address: true
     instance-id: server-center39091
   client:
-    register-with-eureka: false
+    register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:38090/eureka/
