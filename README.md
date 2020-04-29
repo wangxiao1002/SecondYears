@@ -18,7 +18,7 @@
 服务注册中心有很多，做微服务项目以来，从开始的Zk,到使用阿里nacos,还有eurake。
 使用@EnableDiscoveryClient 都可以将服务注册到注册中心上去，是因为SpringCloud 提供良好的抽象配置，DiscoveryClient bean 均可获取服务信息。</br>
 这里搭建Eurake Server 集群是因为之前的技术leader告诫过用Eurake 使用集群方式更好，单个Eurake远远不如nacos,Eurake集群方式思想就是你中有我、我中有你。
-Eurake server1向注册EurakeServer2 注册，2则反之。
+Eurake server1向注册EurakeServer2 注册，2则反之。</br>
 服务查看地址/server-center；注册地址：/eurake
 
 ## 网关 zuul filter
@@ -50,6 +50,8 @@ redis在面试还是日常中经常用来做缓存，为了更加理解redis,自
  
  ## 日志收集
  日志统计使用异步方式，将日志收集到阻塞队列ArrayBlockingQueue中，再利用多线程将日志发送到日志平台
+ ## 配置中心
+ 添加配置中心统一管理配置,配置中心配置账号密码
 
  
  
