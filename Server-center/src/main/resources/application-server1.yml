@@ -10,7 +10,7 @@ eureka:
     instance-id: server-center39090
   client:
     # 注册自己
-    register-with-eureka: false
+    register-with-eureka: true
     ##开启检索服务，单个的eurake不需要开启
     fetch-registry: true
     service-url:
