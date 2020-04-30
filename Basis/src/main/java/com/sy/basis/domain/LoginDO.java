@@ -1,19 +1,25 @@
 package com.sy.basis.domain;
 
+import com.sy.basis.common.BaseDO;
+
 /**
  * 用户账号密码登录实体类
  * @author wangxiao
- * @since
+ * @since 1.1
  */
-public class LoginDO {
+public class LoginDO extends BaseDO {
 
     private String label;
 
     private String code;
 
+    private String phoneNumber;
+
     private String password;
 
     private String verifyCode;
+
+
 
     public String getLabel() {
         return label;
@@ -47,11 +53,22 @@ public class LoginDO {
         this.verifyCode = verifyCode;
     }
 
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
     @Override
     public String toString() {
         return "LoginDO{" +
                 "label='" + label + '\'' +
                 ", code='" + code + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", verifyCode='" + verifyCode + '\'' +
                 '}';
