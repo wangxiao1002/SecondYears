@@ -1,0 +1,21 @@
+
+server:
+  port: 38093
+  servlet:
+    context-path: /auth
+# 验证码配置
+kaptcha:
+  image:
+    width: 100
+    height: 40
+  textproducer:
+    font:
+      size: 32
+      color: '0,0,0'
+    char:
+      string: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYAZ
+      length: 4
+  noise:
+    impl: com.google.code.kaptcha.impl.NoNoise
+
+
