@@ -22,8 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 public class VerifyCodeController {
 
 
+    private final Kaptcha kaptcha;
+
     @Autowired
-    private Kaptcha kaptcha;
+    public VerifyCodeController(Kaptcha kaptcha) {
+        this.kaptcha = kaptcha;
+    }
 
     @GetMapping(value = "/get")
     public void render() {
