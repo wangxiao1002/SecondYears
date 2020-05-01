@@ -1,0 +1,16 @@
+
+server:
+  port: 38093
+  servlet:
+    context-path: /auth
+spring:
+  application:
+    name: authApplication
+  cloud:
+    config:
+      name: authApplication
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: configApplication
+
