@@ -5,17 +5,20 @@ server:
     context-path: /auth
 # 验证码配置
 kaptcha:
-  image:
-    width: 100
-    height: 40
-  textproducer:
-    font:
-      size: 32
-      color: '0,0,0'
-    char:
-      string: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYAZ
-      length: 4
-  noise:
-    impl: com.google.code.kaptcha.impl.NoNoise
-
-
+  height: 50
+  width: 200
+  content:
+    length: 4
+    source: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYAZ
+    space: 2
+  font:
+    color: blue
+    name: 宋体,楷体,微软雅黑
+    size: 40
+  background-color:
+    from: lightGray
+    to: white
+  border:
+    enabled: true
+    color: black
+    thickness: 1
