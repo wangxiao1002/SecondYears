@@ -14,7 +14,7 @@ eureka:
     ##开启检索服务，单个的eureka不需要开启
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:38091/eureka/
+      defaultZone: http://172.17.233.201:38091/eureka/
   server:
     # 是否开启自我保护
     enable-self-preservation: true

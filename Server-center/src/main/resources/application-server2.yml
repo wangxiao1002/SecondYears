@@ -12,7 +12,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:38090/eureka/
+      defaultZone: http://172.17.233.201:38090/eureka/
   server:
     enable-self-preservation: true
     eviction-interval-timer-in-ms: 60000
