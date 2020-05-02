@@ -18,11 +18,4 @@ public class CacheManager {
         ExpireThread expireThread = new ExpireThread();
         executorService.execute(expireThread);
     }
-
-
-    public static void main(String[] args) {
-        CacheUtil.put("a","hello");
-        System.out.print(CacheUtil.containsKey("a"));
-        System.out.print(""+ CacheUtil.get("a"));
-    }
 }

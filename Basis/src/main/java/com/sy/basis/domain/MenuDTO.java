@@ -17,6 +17,8 @@ public class MenuDTO extends BaseDO {
 
     private Integer order;
 
+    private String url;
+
 
 
     public String getLabel() {
@@ -43,12 +45,21 @@ public class MenuDTO extends BaseDO {
         this.order = order;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "MenuDTO{" +
                 "label='" + label + '\'' +
                 ", code='" + code + '\'' +
                 ", order=" + order +
+                ", url='" + url + '\'' +
                 '}';
     }
 }
