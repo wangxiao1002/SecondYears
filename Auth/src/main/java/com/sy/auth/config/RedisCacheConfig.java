@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.databind.ser.std.StringSerializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 
 import java.time.Duration;
@@ -67,48 +70,69 @@ public class RedisCacheConfig {
     }
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        return new RedisCacheManager(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(600),
-                getRedisCacheConfigurationMap());
+    @ConditionalOnMissingBean(StringRedisTemplate.class)
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        StringRedisTemplate template = new StringRedisTemplate();
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
     }
 
+    /**
+     * 覆盖redisTemplate 重写序列化器
+     * @param redisConnectionFactory
+     * @return RedisTemplate
+     */
     @Bean
-    public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        StringRedisTemplate redisTemplate = new StringRedisTemplate(redisConnectionFactory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String,Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+        Jackson2JsonRedisSerializer<Object> valueSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        valueSerializer.setObjectMapper(om);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(valueSerializer);
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(valueSerializer);
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    /**
+     * 缓存管理器 弥补@Cacheable 不能设置超时时间 主要通过withCacheConfiguration 来设置
+     * @param redisTemplate
+     * @return
+     */
+    @Bean
+    public CacheManager cacheManager(RedisTemplate<String,Object> redisTemplate) {
+
+        RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
+                .fromConnectionFactory(redisTemplate.getConnectionFactory())
+                .cacheDefaults(getCacheConfigurationWithTtl(redisTemplate,60))
+                .withCacheConfiguration("AUTH_USER_INFO",getCacheConfigurationWithTtl(redisTemplate,300))
+                .transactionAware()
+                .build();
+        return redisCacheManager;
+
     }
 
 
-    private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
-        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(2);
-        redisCacheConfigurationMap.put("AUTH_USER_INFO", this.getRedisCacheConfigurationWithTtl(3000));
-        redisCacheConfigurationMap.put("AUTH_OTHER_INFO", this.getRedisCacheConfigurationWithTtl(18000));
-        return redisCacheConfigurationMap;
+
+    public RedisCacheConfiguration getCacheConfigurationWithTtl(RedisTemplate<String,Object> redisTemplate, long expireTime) {
+        return RedisCacheConfiguration
+                .defaultCacheConfig()
+                // key 序列化
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getStringSerializer()))
+                // value 序列化
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()))
+                // 不缓存null
+                .disableCachingNullValues()
+                // ttl
+                .entryTtl(Duration.ofSeconds(expireTime));
     }
 
-    private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Integer seconds) {
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
-        redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
-                RedisSerializationContext
-                        .SerializationPair
-                        .fromSerializer(jackson2JsonRedisSerializer)
-        ).entryTtl(Duration.ofSeconds(seconds));
 
-        return redisCacheConfiguration;
-    }
+
+
 }
