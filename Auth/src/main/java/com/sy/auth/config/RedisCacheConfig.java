@@ -25,6 +25,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * redis cache config
@@ -107,13 +108,12 @@ public class RedisCacheConfig {
     @Bean
     public CacheManager cacheManager(RedisTemplate<String,Object> redisTemplate) {
 
-        RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
-                .fromConnectionFactory(redisTemplate.getConnectionFactory())
+        return RedisCacheManager.RedisCacheManagerBuilder
+                .fromConnectionFactory(Objects.requireNonNull(redisTemplate.getConnectionFactory()))
                 .cacheDefaults(getCacheConfigurationWithTtl(redisTemplate,60))
                 .withCacheConfiguration("AUTH_USER_INFO",getCacheConfigurationWithTtl(redisTemplate,300))
                 .transactionAware()
                 .build();
-        return redisCacheManager;
 
     }
 
