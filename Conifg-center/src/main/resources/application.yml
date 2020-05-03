@@ -11,7 +11,7 @@ spring:
         git:
           uri: https://github.com/wangxiao1002/config
           username: wangxiao1002
-          password: *****
+          password: HEchuTIANya1.
           # 文件夹
           search-paths: config
           default-label: master
@@ -29,10 +29,14 @@ eureka:
     instance-info-replication-interval-seconds: 30
   instance:
     prefer-ip-address: true
-    instance-id: configApplication
+    instance-id: configApplicationlocal
     #   Eureka服务器在接收到本实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除
     lease-renewal-interval-in-seconds: 30
     #  eureka客户需要多长时间发送心跳给eureka服务器
     lease-expiration-duration-in-seconds: 15
+    # 添加地址后 客户端获取地址不加 /config
+    metadata-map:
+      configPath: ${server.servlet.context-path}
+
 
 

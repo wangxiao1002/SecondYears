@@ -36,6 +36,7 @@ public interface AuthMapper {
      * @param userCode
      * @return List<MenuDTO>
      */
+    @Cacheable(cacheNames = "AUTH_OTHER_INFO",keyGenerator = "authKeyGenerator")
     @Results(id = "menuResultMap",value = {
             @Result(property = "label",column = "label"),
             @Result(property = "code",column = "code"),
@@ -50,7 +51,7 @@ public interface AuthMapper {
      * @param userCode
      * @return List<AuthorityDO>
      */
-    @Cacheable(cacheNames ="AUTH_USER_INFO",key = "authorityKeyGenerator")
+    @Cacheable(cacheNames ="AUTH_USER_INFO",keyGenerator = "authorityKeyGenerator")
     @Results(id = "authorityResultMap",value = {
             @Result(property = "label",column = "label"),
             @Result(property = "code",column = "code"),
