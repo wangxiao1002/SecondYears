@@ -1,6 +1,6 @@
 
 server:
-  port: 38093
+  port: 38094
   servlet:
     context-path: /auth
 spring:
@@ -8,7 +8,7 @@ spring:
     name: authApplication
   cloud:
     config:
-      label: config
+      enabled: true
       name: authApplication
       profile: dev
       username: sy
@@ -16,12 +16,21 @@ spring:
       discovery:
         enabled: true
         service-id: configApplication
+  cache:
+    type: redis
+  redis:
+    host: 123.57.243.207
+    port: 6379
+    password: HEchuTIANya1.
+    jedis:
+      pool:
+        max-active: 8
+
 # eureka
 eureka:
   client:
     service-url:
-      # defaultZone: http://172.17.233.201:38090/eureka/,http://172.17.233.201:38091/eureka/
-      defaultZone: http://123.57.243.207:38090/eureka/,http://123.57.243.207:38091/eureka/
+      defaultZone: http://172.17.233.201:38090/eureka/,http://172.17.233.201:38091/eureka/
     # 从eureka 上获取服务列表时间 30
     registry-fetch-interval-seconds: 30
     # 复制实例变化信息到eureka服务器所需要的时间间隔
