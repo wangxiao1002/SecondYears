@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-import com.sy.gatewayzuul.support.BaseResponse;
+import com.sy.basis.common.BaseResult;
+import com.sy.basis.util.ResultUtil;
 import com.sy.gatewayzuul.utils.JwtTokenProvider;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
@@ -92,15 +93,15 @@ public abstract class BaseApiFilter extends ZuulFilter {
 
     protected void serverError(Exception e){
         log.info("gateWay-zuul is error ,the message is :{}",e.getMessage());
-        sendBaseResponse(BaseResponse.build().status("fail").message("网关解析系统异常"));
+        sendBaseResponse(ResultUtil.fail("网关服务解析异常"));
     }
 
     protected void nopermission (String id){
         log.info("gateWay-zuul is no permission ,the request id is :{}",id);
-        sendBaseResponse(BaseResponse.build().status("fail").message("您好，您没有权限!"));
+        sendBaseResponse((ResultUtil.fail("您没有相关权限！ 请联系管理员")));
     }
 
-     protected void sendBaseResponse (BaseResponse baseResponse) {
+     protected void sendBaseResponse (BaseResult baseResponse) {
          RequestContext context = RequestContext.getCurrentContext();
          context.setSendZuulResponse(false);
          context.setResponseStatusCode(HttpStatus.SC_OK);

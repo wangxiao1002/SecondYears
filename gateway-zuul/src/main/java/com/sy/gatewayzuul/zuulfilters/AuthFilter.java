@@ -2,8 +2,8 @@ package com.sy.gatewayzuul.zuulfilters;
 
 
 import com.netflix.zuul.context.RequestContext;
+import com.sy.basis.util.ResultUtil;
 import com.sy.gatewayzuul.service.facade.UserFeignService;
-import com.sy.gatewayzuul.support.BaseResponse;
 import com.sy.gatewayzuul.utils.JwtTokenProvider;
 import org.apache.commons.lang.StringUtils;
 
@@ -56,7 +56,7 @@ public class AuthFilter extends BaseApiFilter {
 
         String userCode = jwtTokenProvider.getUserCode(headToken);
         if (!checkUser(userCode)){
-            sendBaseResponse(BaseResponse.build().status("fail").message("您好!用户不存在!"));
+            sendBaseResponse(ResultUtil.fail("您好！该用户不存在"));
         }
 
         if (!checkPermission(userCode,method+spliteStr+uri)) {

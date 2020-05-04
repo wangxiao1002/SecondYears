@@ -1,6 +1,6 @@
 package com.sy.gatewayzuul.service.facade;
 
-import com.sy.gatewayzuul.support.UserDto;
+import com.sy.basis.domain.LoginDO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +20,7 @@ public interface UserFeignService {
      * @return UserDto
      */
     @GetMapping("/user/{userCode}")
-     UserDto queryUserByUserCode(@PathVariable String userCode);
+    LoginDO queryUserByUserCode(@PathVariable String userCode);
 
     /**
      * 通过用户名称查询权限

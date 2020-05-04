@@ -3,7 +3,7 @@ package com.sy.gatewayzuul.zuulfilters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.context.RequestContext;
-import com.sy.gatewayzuul.support.BaseResponse;
+import com.sy.basis.util.ResultUtil;
 import org.apache.http.HttpStatus;
 import org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter;
 import org.springframework.http.MediaType;
@@ -30,7 +30,7 @@ public class ErrorFilter extends SendErrorFilter {
         response.setCharacterEncoding("utf-8");
         String json = "{\"status:\"fail\"}";
         try  {
-            json = objectMapper.writeValueAsString(BaseResponse.build().status("fail").message("您好!系统异常了!"));
+            json = objectMapper.writeValueAsString(ResultUtil.fail("网关服务系统异常"));
         }catch (JsonProcessingException e1) {
             e1.printStackTrace();
         }
