@@ -13,10 +13,10 @@ public interface AuthorityService {
 
     /**
      * 根据ID 查询权限
-     * @param id
+     * @param code 代码
      * @return AuthorityDO
      */
-    AuthorityDO queryAuthorityById(String id);
+    AuthorityDO queryAuthorityByCode(String code);
 
     /**
      * 根据民资或者代码 模糊查询权限

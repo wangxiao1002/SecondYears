@@ -32,6 +32,15 @@ public interface AuthMapper {
 
 
     /**
+     * 验证用户是否存在
+     * @param userCode
+     * @return LoginDO
+     */
+    @ResultMap(value = "userResultMap")
+    @Select("SELECT t.code,t.label,t.phone_number FROM t_auth_user t WHERE t.`code` =#{param}")
+    LoginDO  selectUserByCode(@Param("param") String userCode);
+
+    /**
      * 查询用户菜单
      * @param userCode
      * @return List<MenuDTO>

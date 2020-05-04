@@ -21,6 +21,13 @@ public interface AuthService {
     LoginDO queryUserByInfo(LoginDO param);
 
 
+    /**
+     * 使用 用户code 查询用户
+     * @param userCode
+     * @return LoginDO
+     */
+    LoginDO queryUserByCode(String userCode);
+
      /**
       * 查询用户菜单
       * @author wangxiao

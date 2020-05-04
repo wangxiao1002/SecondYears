@@ -3,4 +3,72 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sy.auth.mapper.AuthorityMapper">
 
+    <resultMap id="authorityResultMap" type="com.sy.basis.domain.AuthorityDO">
+        <result column="label" property="label" jdbcType="VARCHAR" />
+        <result column="uri" property="uri" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="label != null and label != ''">
+                label,
+            </if>
+            <if test="uri != null and uri != ''">
+                uri,
+            </if>
+            <if test="code != null and code != ''">
+                code,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="values">
+        <trim suffixOverrides=",">
+            <if test="label != null and label != ''">
+                #{label},
+            </if>
+            <if test="uri != null and uri != ''">
+                #{uri},
+            </if>
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+        </trim>
+    </sql>
+
+    <select id="selectByCode" resultMap="authorityResultMap" parameterType="java.lang.String">
+        SELECT t.`code`,t.label,t.uri FROM t_auth_authority t WHERE t.`code` = #{code}
+    </select>
+
+    <select id="selectByNameOrCode" resultMap="authorityResultMap" parameterType="java.lang.String">
+        SELECT t.`code`,t.label,t.uri FROM t_auth_authority t WHERE t.`code` LIKE  CONCAT('%',#{other},'%')
+        UNION ALL
+        SELECT t.`code`,t.label,t.uri FROM t_auth_authority t WHERE t.label LIKE  CONCAT('%',#{other},'%')
+    </select>
+
+    <select id="selectAll" resultMap="authorityResultMap" >
+        SELECT t.`code`,t.label,t.uri FROM t_auth_authority t
+    </select>
+
+
+    <update id="updateAuthorityDO" parameterType="com.sy.basis.domain.AuthorityDO">
+        update  t_auth_authority t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="label != null and label != ''">
+                t.lable = #{param.label},
+            </if>
+            <if test="uri != null and uri != ''">
+                t.uri = #{param.uri},
+            </if>
+        </trim>
+        where  t.`code` = #{param.code}
+    </update>
+
+
+    <insert id="addAuthorityDO" parameterType="com.sy.basis.domain.AuthorityDO">
+        insert into t_auth_authority (<include refid="key" />)  values (<include refid="values" />)
+    </insert>
+
+
 </mapper>

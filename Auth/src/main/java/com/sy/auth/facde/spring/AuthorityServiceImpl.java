@@ -1,9 +1,11 @@
 package com.sy.auth.facde.spring;
 
 import com.sy.auth.facde.service.AuthorityService;
+import com.sy.auth.mapper.AuthorityMapper;
 import com.sy.basis.domain.AuthorityDO;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,29 +16,32 @@ import java.util.List;
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
 
+    @Resource
+    private AuthorityMapper authorityMapper;
+
     @Override
-    public AuthorityDO queryAuthorityById(String id) {
-        return null;
+    public AuthorityDO queryAuthorityByCode(String code) {
+        return authorityMapper.selectByCode(code);
     }
 
     @Override
     public List<AuthorityDO> queryAuthorityByOther(String other) {
-        return null;
+        return authorityMapper.selectByNameOrCode(other);
     }
 
     @Override
     public List<AuthorityDO> queryAuthorities() {
-        return null;
+        return authorityMapper.selectAll();
     }
 
     @Override
     public int updateAuthorityDO(AuthorityDO authorityDO) {
-        return 0;
+        return authorityMapper.updateAuthorityDO(authorityDO);
     }
 
     @Override
     public int addAuthorityDO(AuthorityDO authorityDO) {
-        return 0;
+        return authorityMapper.addAuthorityDO(authorityDO);
     }
 
 

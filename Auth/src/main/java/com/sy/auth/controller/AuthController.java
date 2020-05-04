@@ -8,11 +8,14 @@ import com.baomidou.kaptcha.exception.KaptchaTimeoutException;
 import com.sy.auth.facde.service.AuthService;
 import com.sy.basis.common.BaseResult;
 import com.sy.basis.common.ResultStatus;
+import com.sy.basis.domain.AuthorityDO;
 import com.sy.basis.domain.LoginDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 /**
@@ -55,6 +58,24 @@ public class AuthController {
     }
 
 
+    /**
+     * 查询用户权限点
+     * @param userCode 用户
+     * @return List<String>
+     */
+    @GetMapping("/permission/{userCode}")
+    public List<String> queryPermission(@PathVariable String userCode) {
+        List<AuthorityDO> authorityDOList = authService.queryAuthorities(userCode);
+        return authorityDOList.stream().map(AuthorityDO::getUri).collect(Collectors.toList());
+    }
+
+    @GetMapping("/user/{userCode}")
+    public LoginDO queryUserByUserCode(@PathVariable String userCode){
+        return authService.queryUserByCode(userCode);
+    }
+
+
+
     public boolean validWithTime(String code) {
         try {
             kaptcha.validate(code,60);
@@ -63,6 +84,8 @@ public class AuthController {
             return false;
         }
     }
+
+
 
 
 

@@ -3,14 +3,13 @@ package com.sy.auth.controller;
 import com.sy.auth.facde.service.AuthService;
 import com.sy.auth.facde.service.AuthorityService;
 import com.sy.basis.common.BaseResult;
-import com.sy.basis.common.ResultStatus;
 import com.sy.basis.domain.AuthorityDO;
 import com.sy.basis.util.ResultUtil;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 权限点控制
@@ -35,7 +34,7 @@ public class AuthorityController {
 
     @GetMapping("/{id}")
     public BaseResult<AuthorityDO> getAuthority(@PathVariable String id) {
-        return ResultUtil.success(authorityService.queryAuthorityById(id)) ;
+        return ResultUtil.success(authorityService.queryAuthorityByCode(id)) ;
     }
 
     @GetMapping
@@ -46,7 +45,9 @@ public class AuthorityController {
     @GetMapping("/checkAuthority")
     public BaseResult<Boolean> checkAuthority(@RequestParam String userCode,
                                               @RequestParam String uri){
-        return null;
+        List<AuthorityDO> authorityDOList = authService.queryAuthorities(userCode);
+        List<String> permissions =authorityDOList.stream().map(AuthorityDO::getUri).collect(Collectors.toList());
+        return  ResultUtil.success(permissions.stream().anyMatch(s -> s.equals(uri)));
     }
 
 }

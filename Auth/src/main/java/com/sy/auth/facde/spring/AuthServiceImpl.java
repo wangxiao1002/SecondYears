@@ -27,6 +27,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public LoginDO queryUserByCode(String userCode) {
+        return authMapper.selectUserByCode(userCode);
+    }
+
+    @Override
     public List<MenuDTO> queryMenus(String userCode) {
         return authMapper.selectMenusByUser(userCode);
     }
