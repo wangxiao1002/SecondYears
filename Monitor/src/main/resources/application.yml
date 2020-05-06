@@ -33,7 +33,6 @@ eureka:
     lease-renewal-interval-in-seconds: 30
     #  eureka客户需要多长时间发送心跳给eureka服务器
     lease-expiration-duration-in-seconds: 15
-    health-check-url-path: /actuator/health
     metadata-map:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
