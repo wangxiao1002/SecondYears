@@ -9,7 +9,8 @@ eureka:
     prefer-ip-address: true
     instance-id: server-center39091
     metadata-map:
-      
+      management:
+        context-path: ${server.servlet.context-path}
   client:
     register-with-eureka: true
     fetch-registry: true
