@@ -8,6 +8,8 @@ eureka:
     hostname: server-center2
     prefer-ip-address: true
     instance-id: server-center39091
+    metadata-map:
+      
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -17,3 +19,11 @@ eureka:
     enable-self-preservation: true
     eviction-interval-timer-in-ms: 60000
     wait-time-in-ms-when-sync-empty: 0
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

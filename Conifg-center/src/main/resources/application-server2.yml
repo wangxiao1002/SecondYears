@@ -37,8 +37,8 @@ eureka:
     # 添加地址后 客户端获取地址不加 /config
     metadata-map:
       configPath: ${server.servlet.context-path}
-      metadata-map:
-        configPath: ${server.servlet.context-path}
+      management:
+        context-path: ${server.servlet.context-path}
 management:
   endpoints:
     web:
