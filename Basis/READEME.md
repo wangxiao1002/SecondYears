@@ -3,6 +3,7 @@
 1. 共用实体类不用重复创建
 2. 共用方法不能项目之间共享
 3. 提供基础功能，自定义缓存、日志收集等
+4. 分布式id 生成，
 ## 自定义本地缓存模块
 1. CacheEntity 缓存实体类
 2. CacheManager 缓存管理器，用来存放缓存,启动清理线程
@@ -19,9 +20,13 @@
         executorService.execute(new LogThread(new LogSendService()));
     }
 ```
-**重要类有：**</br>
+## 分布式ID生成
+* snowflake 算法
+
+**重要类有:**
 1. LogEntity 日志实体类
 2. LogUtil 日志工具，提供添加日志
 3. LogThread 日志线程
 4. LogManager 日志管理日 包含阻塞队列操作
 5. LogSendService 日志发送service 具体业务需要自己实现，并通过LogThread构造参数传递进入
+

@@ -4,6 +4,7 @@ import com.sy.basis.common.BaseDO;
 
 import java.util.List;
 
+
 /**
  * 菜单
  * @author wangxiao
@@ -19,7 +20,9 @@ public class MenuDTO extends BaseDO {
 
     private String url;
 
+    private transient String upCode;
 
+    private List<MenuDTO> childMenus;
 
     public String getLabel() {
         return label;
@@ -53,6 +56,23 @@ public class MenuDTO extends BaseDO {
         this.url = url;
     }
 
+    public String getUpCode() {
+        return upCode;
+    }
+
+    public void setUpCode(String upCode) {
+        this.upCode = upCode;
+    }
+
+    public List<MenuDTO> getChildMenus() {
+        return childMenus;
+    }
+
+    public void setChildMenus(List<MenuDTO> childMenus) {
+        this.childMenus = childMenus;
+    }
+
+
     @Override
     public String toString() {
         return "MenuDTO{" +
@@ -60,6 +80,8 @@ public class MenuDTO extends BaseDO {
                 ", code='" + code + '\'' +
                 ", order=" + order +
                 ", url='" + url + '\'' +
+                ", upCode='" + upCode + '\'' +
+                ", childMenus=" + childMenus +
                 '}';
     }
 }
