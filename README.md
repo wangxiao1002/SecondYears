@@ -14,7 +14,8 @@
 7. 待完善
 
  **准备工作---start**
-
+## 分布式ID策略
+实现snowflake 算法，主要生成菜单、按钮、权限点等code
 ## Eurake Server 集群
 服务注册中心有很多，做微服务项目以来，从开始的Zk,到使用阿里nacos,还有eurake。
 使用@EnableDiscoveryClient 都可以将服务注册到注册中心上去，是因为SpringCloud 提供良好的抽象配置，DiscoveryClient bean 均可获取服务信息。</br>
