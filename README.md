@@ -12,9 +12,9 @@
 5. 文件存储，直播录像视频
 6. 礼物商城
 7. 待完善
-</br>
+
  ** 准备工作---start **
-</br>
+
 ## Eurake Server 集群
 服务注册中心有很多，做微服务项目以来，从开始的Zk,到使用阿里nacos,还有eurake。
 使用@EnableDiscoveryClient 都可以将服务注册到注册中心上去，是因为SpringCloud 提供良好的抽象配置，DiscoveryClient bean 均可获取服务信息。</br>
