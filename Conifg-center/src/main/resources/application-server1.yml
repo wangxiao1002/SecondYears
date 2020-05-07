@@ -11,7 +11,7 @@ spring:
         git:
           uri: https://github.com/wangxiao1002/config
           username: wangxiao1002
-          password: HEchuTIANya1.
+          password: *******
           # 文件夹
           search-paths: config
           default-label: master
