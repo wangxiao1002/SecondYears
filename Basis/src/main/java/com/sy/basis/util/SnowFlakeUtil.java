@@ -151,10 +151,5 @@ public class SnowFlakeUtil {
         return machinePiece;
     }
 
-    public static void main(String[] args) {
-        System.out.println(SnowFlakeUtil.nextId());
-        System.out.println(SnowFlakeUtil.nextId());
-        System.out.println(SnowFlakeUtil.nextId());
-    }
     
 }
