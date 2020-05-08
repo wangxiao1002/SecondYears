@@ -3,6 +3,7 @@ package com.sy.auth.facde.spring;
 import com.sy.auth.facde.service.AuthorityService;
 import com.sy.auth.mapper.AuthorityMapper;
 import com.sy.basis.domain.AuthorityDO;
+import com.sy.basis.util.SnowFlakeUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,6 +42,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public int addAuthorityDO(AuthorityDO authorityDO) {
+        authorityDO.setCode(String.valueOf(SnowFlakeUtil.nextId()));
         return authorityMapper.addAuthorityDO(authorityDO);
     }
 

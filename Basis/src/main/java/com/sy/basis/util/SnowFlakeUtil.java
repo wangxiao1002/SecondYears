@@ -14,7 +14,8 @@ import java.util.Enumeration;
  * @since 1.1
  */
 public class SnowFlakeUtil {
-    
+
+
     private final static long EPOCH = 12888349746579L;
     /**
      * 机器标识位数
@@ -79,7 +80,6 @@ public class SnowFlakeUtil {
         //获取进程编码
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         this.processId= Long.parseLong(runtimeMXBean.getName().split("@")[0]);
-
         //避免编码超出最大值
         this.workerId=workerId & WORKER_MASK;
         this.processId=processId & PROCESS_MASK;
@@ -150,6 +150,4 @@ public class SnowFlakeUtil {
         machinePiece = sb.toString().hashCode();
         return machinePiece;
     }
-
-    
 }

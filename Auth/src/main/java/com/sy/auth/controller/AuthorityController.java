@@ -36,6 +36,7 @@ public class AuthorityController {
     public BaseResult<AuthorityDO> getAuthority(@PathVariable String code) {
         return ResultUtil.success(authorityService.queryAuthorityByCode(code)) ;
     }
+
     @GetMapping
     public BaseResult<List<AuthorityDO>> searchAuthority(@RequestParam String other) {
         return ResultUtil.success(authorityService.queryAuthorityByOther(other)) ;
@@ -45,9 +46,15 @@ public class AuthorityController {
     public BaseResult<List<AuthorityDO>> getAuthorities() {
         return ResultUtil.success(authorityService.queryAuthorities());
     }
+
     @DeleteMapping("/{code}")
     public BaseResult<Integer> deleteAuthority(@PathVariable String code) {
         return ResultUtil.success(authorityService.delAuthorityDO(code));
+    }
+
+    @PutMapping
+    public BaseResult<Integer> updateAuthority(@RequestBody AuthorityDO authorityDO) {
+        return ResultUtil.success(authorityService.updateAuthorityDO(authorityDO));
     }
 
     @GetMapping("/checkAuthority")
