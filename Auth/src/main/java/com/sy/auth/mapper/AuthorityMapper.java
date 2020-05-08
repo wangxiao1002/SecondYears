@@ -50,4 +50,11 @@ public interface AuthorityMapper {
      * @return int  受影响的行
      */
     int addAuthorityDO(AuthorityDO authorityDO);
+
+    /**
+     * 删除权限
+     * @param code 新属性
+     * @return int  受影响的行
+     */
+    int delAuthorityDO(String code);
 }

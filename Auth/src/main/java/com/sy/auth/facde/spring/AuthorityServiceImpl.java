@@ -44,5 +44,8 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityMapper.addAuthorityDO(authorityDO);
     }
 
-
+    @Override
+    public int delAuthorityDO(String code) {
+        return authorityMapper.delAuthorityDO(code);
+    }
 }

@@ -28,18 +28,26 @@ public class AuthorityController {
 
 
     @PostMapping
-    public BaseResult addAuthority(@RequestBody AuthorityDO param) {
+    public BaseResult<Integer> addAuthority(@RequestBody AuthorityDO param) {
       return ResultUtil.success(authorityService.addAuthorityDO(param));
     }
 
-    @GetMapping("/{id}")
-    public BaseResult<AuthorityDO> getAuthority(@PathVariable String id) {
-        return ResultUtil.success(authorityService.queryAuthorityByCode(id)) ;
+    @GetMapping("/{code}")
+    public BaseResult<AuthorityDO> getAuthority(@PathVariable String code) {
+        return ResultUtil.success(authorityService.queryAuthorityByCode(code)) ;
+    }
+    @GetMapping
+    public BaseResult<List<AuthorityDO>> searchAuthority(@RequestParam String other) {
+        return ResultUtil.success(authorityService.queryAuthorityByOther(other)) ;
     }
 
     @GetMapping
     public BaseResult<List<AuthorityDO>> getAuthorities() {
         return ResultUtil.success(authorityService.queryAuthorities());
+    }
+    @DeleteMapping("/{code}")
+    public BaseResult<Integer> deleteAuthority(@PathVariable String code) {
+        return ResultUtil.success(authorityService.delAuthorityDO(code));
     }
 
     @GetMapping("/checkAuthority")

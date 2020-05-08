@@ -19,7 +19,7 @@ public interface AuthorityService {
     AuthorityDO queryAuthorityByCode(String code);
 
     /**
-     * 根据民资或者代码 模糊查询权限
+     * 根据名称或者代码 模糊查询权限
      * @param other
      * @return List<AuthorityDO>
      */
@@ -45,6 +45,15 @@ public interface AuthorityService {
      * @return 受影响的行
      */
     int addAuthorityDO(AuthorityDO authorityDO);
+
+    /**
+     * 添加权限
+     * @param code 代码
+     * @return 受影响的行
+     */
+    int delAuthorityDO(String code);
+
+
 
 
 }

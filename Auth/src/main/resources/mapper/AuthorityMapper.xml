@@ -70,5 +70,8 @@
         insert into t_auth_authority (<include refid="key" />)  values (<include refid="values" />)
     </insert>
 
+    <delete id="addAuthorityDO" parameterType="java.lang.String">
+        delete from t_auth_authority where  `code` = #{code}
+    </delete>
 
 </mapper>
