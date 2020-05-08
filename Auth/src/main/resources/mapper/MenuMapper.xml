@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.auth.mapper.MenuMapper">
+
+    <resultMap id="menuResultMap" type="com.sy.basis.domain.MenuDTO">
+        <result column="label" property="label" jdbcType="VARCHAR" />
+        <result column="url" property="uri" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="up_code" property="upCode" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="label != null and label != ''">
+                label,
+            </if>
+            <if test="url != null and url != ''">
+                url,
+            </if>
+            <if test="code != null and code != ''">
+                code,
+            </if>
+            <if test="upCode != null and upCode != ''">
+                up_code,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="values">
+        <trim suffixOverrides=",">
+            <if test="label != null and label != ''">
+                #{label},
+            </if>
+            <if test="url != null and url != ''">
+                #{url},
+            </if>
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="upCode != null and upCode != ''">
+                #{upCode},
+            </if>
+        </trim>
+    </sql>
+
+
+
+    <select id="selectByNameOrCode" resultMap="menuResultMap" parameterType="java.lang.String">
+        SELECT t.`code`,t.label,t.url,t.up_code  FROM t_auth_menu t WHERE t.`code` LIKE  CONCAT('%',#{other},'%')
+        UNION ALL
+        SELECT t.`code`,t.label,t.url,t.up_code FROM t_auth_menu t WHERE t.label LIKE  CONCAT('%',#{other},'%')
+    </select>
+
+    <select id="selectAll" resultMap="menuResultMap" >
+        SELECT t.`code`,t.label,t.url FROM t_auth_menu t
+    </select>
+
+
+    <update id="updateMenu" parameterType="com.sy.basis.domain.MenuDTO">
+        update  t_auth_menu t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="label != null and label != ''">
+                t.lable = #{param.label},
+            </if>
+            <if test="uri != null and uri != ''">
+                t.url = #{param.url},
+            </if>
+        </trim>
+        where  t.`code` = #{param.code}
+    </update>
+
+
+    <insert id="addMenu" parameterType="com.sy.basis.domain.MenuDTO">
+        insert into t_auth_menu (<include refid="key" />)  values (<include refid="values" />)
+    </insert>
+
+    <delete id="delMenu" parameterType="java.lang.String">
+        delete from t_auth_menu t where  t.`code` = #{code}
+    </delete>
+
+</mapper>
