@@ -127,4 +127,17 @@ public class LogEntity {
         this.result = result;
         return this;
     }
+
+    public String toJson () {
+
+        return "{" + "\"user\":" + "\"" + user + "\"" + "," +
+                "\"uri\":" + "\"" + uri + "\"" + "," +
+                "\"desc\":" + "\"" + desc + "\"" + "," +
+                "\"method\":" + "\"" + method + "\"" + "," +
+                "\"queryParams\":" + "\"" + queryParams + "\"" + "," +
+                "\"bodyParams\":" + "\"" + bodyParams + "\"" + "," +
+                "\"result\":" + "\"" + result + "\"" +
+                "}";
+    }
+
 }

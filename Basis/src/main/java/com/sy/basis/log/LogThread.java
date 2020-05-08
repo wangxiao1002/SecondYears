@@ -7,15 +7,13 @@ package com.sy.basis.log;
  */
 public class LogThread  implements Runnable{
 
-    private LogSendService logSendService;
+
 
     @Override
     public void run() {
-        logSendService.sendLog(LogUtil.getINSTANCE().getLog());
+        LogSendService.sendLog(LogUtil.getINSTANCE().getLog());
     }
 
-    public LogThread(LogSendService logSendService) {
-        this.logSendService = logSendService;
-    }
+
 
 }
