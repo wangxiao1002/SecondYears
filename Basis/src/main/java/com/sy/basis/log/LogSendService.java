@@ -6,6 +6,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import java.util.Objects;
+
 /**
  * 推送日志数据接口  其他模块实现该功能即可
  * @author wangxiao
@@ -20,6 +22,9 @@ public class LogSendService<T> {
       * @return Boolean 返回结果信息
       **/
      public static  Boolean sendLog (LogEntity logEntity){
+          if (Objects.nonNull(logEntity)) {
+               return false;
+          }
           OkHttpClient okHttpClient = new OkHttpClient();
           RequestBody requestBody = RequestBody.create(logEntity.toJson(),MediaType.parse("application/json;charset=utf-8"));
           Request request = new Request.Builder()
