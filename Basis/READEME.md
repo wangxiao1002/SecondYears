@@ -22,7 +22,7 @@
 ```
 ## 分布式ID生成
 * snowflake 算法
-
+* 使用机器号和进程号做 workeid、dataCennterId 保证不同机器上不重复
 **重要类有:**
 1. LogEntity 日志实体类
 2. LogUtil 日志工具，提供添加日志
