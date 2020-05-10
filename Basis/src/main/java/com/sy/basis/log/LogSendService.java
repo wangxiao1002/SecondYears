@@ -28,6 +28,7 @@ public class LogSendService<T> {
           OkHttpClient okHttpClient = new OkHttpClient();
           RequestBody requestBody = RequestBody.create(logEntity.toJson(),MediaType.parse("application/json;charset=utf-8"));
           Request request = new Request.Builder()
+                  .addHeader("sy-auth-token","syndadadadwdadad")
                   .post(requestBody)
                   .url("http://localhost:38094/auth/log/")
                   .build();

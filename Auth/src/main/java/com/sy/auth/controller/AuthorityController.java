@@ -42,7 +42,7 @@ public class AuthorityController {
         return ResultUtil.success(authorityService.queryAuthorityByOther(other)) ;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public BaseResult<List<AuthorityDO>> getAuthorities() {
         return ResultUtil.success(authorityService.queryAuthorities());
     }

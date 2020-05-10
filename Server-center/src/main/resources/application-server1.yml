@@ -8,9 +8,6 @@ eureka:
     hostname: server-center1
     prefer-ip-address: true
     instance-id: server-center39090
-    metadata-map:
-      management:
-        context-path: ${server.servlet.context-path}
   client:
     # 注册自己
     register-with-eureka: true
@@ -31,6 +28,7 @@ management:
     web:
       exposure:
         include: "*"
+        exclude: env,shutdown
   endpoint:
     health:
       show-details: ALWAYS

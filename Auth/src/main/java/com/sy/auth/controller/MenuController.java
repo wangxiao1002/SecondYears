@@ -34,7 +34,7 @@ public class MenuController {
         return ResultUtil.success(menuService.queryMenuByOther(other)) ;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public BaseResult<List<MenuDTO>> getAuthorities() {
         return ResultUtil.success(menuService.queryMenus());
     }

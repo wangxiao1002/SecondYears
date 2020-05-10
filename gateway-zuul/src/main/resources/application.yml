@@ -6,7 +6,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://123.57.243.207:38091/eureka/,http://123.57.243.207:38090/eureka/
+      defaultZone: http://172.17.233.201:38091/eureka/,http://172.17.233.201:38090/eureka/
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}
@@ -45,6 +45,7 @@ zuul:
       # 移除前缀
       strip-prefix: true
       service-id: authApplication
+
     aa:
 #      path: /aut32/*
       # 移除前缀
