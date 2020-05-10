@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.auth.mapper.LogMapper">
+
+    <resultMap id="logResultMap" type="com.sy.basis.log.LogEntity">
+        <result column="user" property="user" jdbcType="VARCHAR" />
+        <result column="uri" property="uri" jdbcType="VARCHAR" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
+        <result column="desc" property="desc" jdbcType="VARCHAR" />
+        <result column="query_params" property="queryParams" jdbcType="VARCHAR" />
+        <result column="body_params" property="bodyParams" jdbcType="VARCHAR" />
+        <result column="result" property="result" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <insert id="saveLogs" parameterType="java.util.List">
+        INSERT INTO t_sy_log ( `user`, `uri`, method, `desc`, query_params, body_params, result, `status` )
+        VALUES
+        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+            #{item.user},
+            #{item.uri},
+            #{item.method},
+            #{item.desc},
+            #{item.queryParams},
+            #{item.bodyParams},
+            #{item.result},
+            #{item.status}
+
+        </foreach>
+    </insert>
+
+    <select id="selectLogs" parameterType="com.sy.auth.support.LogDTO" resultMap="logResultMap">
+        SELECT  `user`, `uri`, method, `desc`, query_params, body_params, result, `status` FROM t_sy_log t
+        <trim prefixOverrides="AND">
+            <if test="user != null and user != '' ">
+                AND t.`user` = #{user}
+            </if>
+            <if test="uri != null and uri != '' ">
+                AND t.`uri` = #{uri}
+            </if>
+            <if test="method != null and method != '' ">
+                AND t.method = #{method}
+            </if>
+            <if test="desc != null and desc != '' ">
+                AND t.`desc` = #{desc}
+            </if>
+            <if test="queryParams != null and queryParams != '' ">
+                AND t.query_params = #{user}
+            </if>
+            <if test="bodyParams != null and bodyParams != '' ">
+                AND t.body_params = #{user}
+            </if>
+            <if test="status != null and status != '' ">
+                AND t.`status` = #{status}
+            </if>
+        </trim>
+    </select>
+
+
+
+</mapper>

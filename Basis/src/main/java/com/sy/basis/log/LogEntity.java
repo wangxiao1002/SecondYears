@@ -40,6 +40,8 @@ public class LogEntity {
      */
     private String result;
 
+    private String  status;
+
     public LogEntity() {
     }
 
@@ -128,6 +130,14 @@ public class LogEntity {
         return this;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String toJson () {
 
         return "{" + "\"user\":" + "\"" + user + "\"" + "," +
@@ -136,7 +146,8 @@ public class LogEntity {
                 "\"method\":" + "\"" + method + "\"" + "," +
                 "\"queryParams\":" + "\"" + queryParams + "\"" + "," +
                 "\"bodyParams\":" + "\"" + bodyParams + "\"" + "," +
-                "\"result\":" + "\"" + result + "\"" +
+                "\"result\":" + "\"" + result + "\"" +"," +
+                "\"status\":" + "\"" + status + "\"" +
                 "}";
     }
 
