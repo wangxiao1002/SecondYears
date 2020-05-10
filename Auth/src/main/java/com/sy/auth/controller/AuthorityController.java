@@ -65,4 +65,6 @@ public class AuthorityController {
         return  ResultUtil.success(permissions.stream().anyMatch(s -> s.equals(uri)));
     }
 
+
+
 }
