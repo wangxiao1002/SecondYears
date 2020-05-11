@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 /**
@@ -43,6 +44,11 @@ public class MailBusListener {
     public void init(){
         mailUtil = MailUtil.getInstance(javaMailSender,templateEngine);
         asyncEventBus.register(this);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        asyncEventBus.unregister(this);
     }
 
     @AllowConcurrentEvents

@@ -8,4 +8,8 @@
 6. 消息中心
 ## 微信登录控制
 ## 手机号快速登录
+## 邮件服务
+1. 使用EventBus 发布订阅邮件消息 
+2. EventBus是一个基于发布订阅的事件总线, 需要手动注入EventBus 这个bean，注入时候可指定线程池，注入之后书写消费者既Listener
+类,在初始化时候调用eventBus.register(this); 将消费者注册进去，然后可以写消费消息方法，往总线里面添加消息使用eventBus.post()
 
