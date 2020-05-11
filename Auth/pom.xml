@@ -98,6 +98,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <!--eventbus-->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-guava-eventbus-starter</artifactId>
+            <version>3.0.0-RC3</version>
+        </dependency>
+
 
 
     </dependencies>
