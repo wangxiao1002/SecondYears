@@ -1,8 +1,6 @@
 package com.sy.auth.config;
 
 import com.google.common.eventbus.AsyncEventBus;
-
-import com.google.common.eventbus.EventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,8 +15,8 @@ import java.util.concurrent.*;
 @Configuration
 public class EventBusConfig {
 
-    @Bean
-    public EventBus eventBus () {
+    @Bean(name = "asyncEventBus")
+    public AsyncEventBus eventBus () {
         return new AsyncEventBus(executor());
     }
     private ThreadPoolExecutor executor(){

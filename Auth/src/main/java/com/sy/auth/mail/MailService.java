@@ -1,11 +1,13 @@
 package com.sy.auth.mail;
 
+import com.google.common.eventbus.AsyncEventBus;
+import com.sy.basis.domain.MailEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 
-import javax.annotation.Resource;
+
+
 
 /**
  * 邮件服务
@@ -16,12 +18,19 @@ import javax.annotation.Resource;
 public class MailService {
 
 
-    @Resource
-    private  JavaMailSender javaMailSender;
+
 
     @Autowired
-    private  TemplateEngine templateEngine;
+    @Qualifier("asyncEventBus")
+    private AsyncEventBus asyncEventBus;
 
+
+
+
+
+    public void sendMail (MailEntity mail) {
+        asyncEventBus.post(mail);
+    }
 
 
 }

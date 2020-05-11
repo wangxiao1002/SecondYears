@@ -23,16 +23,20 @@ import java.util.Objects;
  */
 public class MailUtil {
 
-    private  static JavaMailSender JAVA_MAIL_SENDER;
+    private   JavaMailSender javaMailSender;
 
-    private static TemplateEngine TEMPLATE_ENGINE;
+    private  TemplateEngine templateEngine;
 
-    public MailUtil(JavaMailSender javaMailSender,TemplateEngine templateEngine) {
-        JAVA_MAIL_SENDER = javaMailSender;
-        TEMPLATE_ENGINE = templateEngine;
+    private MailUtil(JavaMailSender javaMailSender,TemplateEngine templateEngine) {
+        this.javaMailSender = javaMailSender;
+        this.templateEngine = templateEngine;
     }
 
-    public static void sendMail (MailEntity mail) {
+    public static MailUtil getInstance (JavaMailSender javaMailSender,TemplateEngine templateEngine) {
+        return new MailUtil(javaMailSender, templateEngine);
+    }
+
+    public void sendMail (MailEntity mail) {
         Assert.notNull(mail,"mail must not null  !!");
 
         switch (mail.getType()) {
@@ -48,21 +52,21 @@ public class MailUtil {
     }
 
 
-    private static void sendNormalMail (MailEntity email) {
+    private void sendNormalMail (MailEntity email) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(email.getFrom());
         mailMessage.setTo(email.getTo());
         mailMessage.setSubject(email.getSubject());
         mailMessage.setText(email.getContent());
-        JAVA_MAIL_SENDER.send(mailMessage);
+        javaMailSender.send(mailMessage);
     }
 
-    private static  void sendHtmlMail (MailEntity email) {
+    private  void sendHtmlMail (MailEntity email) {
         String content = email.getContent();
         if (email.getVariables() != null) {
             content = generate(email);
         }
-        MimeMessage mailMessage = JAVA_MAIL_SENDER.createMimeMessage();
+        MimeMessage mailMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage,true);
             messageHelper.setFrom(email.getFrom());
@@ -73,19 +77,19 @@ public class MailUtil {
                 FileSystemResource file = new FileSystemResource(new File(email.getAttachPath()));
                 messageHelper.addAttachment(Objects.requireNonNull(file.getFilename()),file);
             }
-            JAVA_MAIL_SENDER.send(mailMessage);
+            javaMailSender.send(mailMessage);
         }catch (MessagingException e) {
-
+            e.printStackTrace();
         }
 
 
     }
 
-    private static String generate (MailEntity mail) {
+    private  String generate (MailEntity mail) {
 
         Context context = new Context();
         context.setVariables(mail.getVariables());
-        return TEMPLATE_ENGINE.process(mail.getTemplateName(), context);
+        return templateEngine.process(mail.getTemplateName(), context);
 
     }
 }
