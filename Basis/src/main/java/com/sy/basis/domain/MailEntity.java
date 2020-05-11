@@ -1,5 +1,7 @@
 package com.sy.basis.domain;
 
+import com.sy.basis.common.MailType;
+
 import java.util.Map;
 
 /**
@@ -28,7 +30,7 @@ public class MailEntity {
     /**
      * 类型
      */
-    private String type;
+    private MailType type;
     /**
      * 模板名称
      */
@@ -74,11 +76,11 @@ public class MailEntity {
         this.content = content;
     }
 
-    public String getType() {
+    public MailType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MailType type) {
         this.type = type;
     }
 
@@ -133,7 +135,7 @@ public class MailEntity {
         return this;
     }
 
-    public MailEntity type (String type) {
+    public MailEntity type (MailType type) {
         this.type = type;
         return this;
     }
