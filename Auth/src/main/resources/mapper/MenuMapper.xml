@@ -79,4 +79,12 @@
         delete from t_auth_menu t where  t.`code` = #{code}
     </delete>
 
+    <insert id="insertUserMenu" >
+        INSERT INTO t_auth_user_menu (user_code,menu_code)
+        VALUES
+        <foreach collection="array" index="index" item="item"  separator=",">
+            (#{userCode},#{item})
+        </foreach>
+    </insert>
+
 </mapper>

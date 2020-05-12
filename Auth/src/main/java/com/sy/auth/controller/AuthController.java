@@ -10,7 +10,10 @@ import com.sy.basis.common.BaseResult;
 import com.sy.basis.common.ResultStatus;
 import com.sy.basis.domain.AuthorityDO;
 import com.sy.basis.domain.LoginDO;
+import com.sy.basis.domain.MenuDTO;
+import com.sy.basis.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,6 +87,24 @@ public class AuthController {
             return false;
         }
     }
+
+
+    @PostMapping("/authority/{userCode}")
+    public BaseResult<Integer> accreditAuthority(@PathVariable String userCode,
+                                                 @RequestBody List<AuthorityDO> authorityDOList) {
+        Assert.notEmpty(authorityDOList,"权限集合不能为空");
+        return  ResultUtil.success("添加成功",authService.addUserAuthority(userCode,authorityDOList));
+    }
+
+
+    @PostMapping("/menu/{userCode}")
+    public BaseResult<Integer> accreditMenu(@PathVariable String userCode,
+                                                 @RequestBody List<MenuDTO> menuDTOList) {
+        Assert.notEmpty(menuDTOList,"菜单集合不能为空");
+        return  ResultUtil.success("添加成功",authService.addUserMenu(userCode,menuDTOList));
+    }
+
+
 
 
 

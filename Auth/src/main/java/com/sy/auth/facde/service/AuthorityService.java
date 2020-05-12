@@ -47,20 +47,11 @@ public interface AuthorityService {
     int addAuthorityDO(AuthorityDO authorityDO);
 
     /**
-     * 添加权限
+     * 删除权限
      * @param code 代码
      * @return 受影响的行
      */
     int delAuthorityDO(String code);
-
-
-    /**
-     * 给用户添加权限
-     * @param userCode
-     * @param authorityDOS
-     * @return 受影响的行
-     */
-    int addUserAuthority (String userCode,List<AuthorityDO> authorityDOS);
 
 
 }

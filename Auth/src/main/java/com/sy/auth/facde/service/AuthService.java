@@ -43,4 +43,21 @@ public interface AuthService {
      * @return List<AuthorityDO>
      */
     List<AuthorityDO> queryAuthorities(String userCode);
+
+    /**
+     * 给用户添加权限
+     * @param userCode 用户
+     * @param authorityDOS 权限集合
+     * @return 受影响的行
+     */
+    int addUserAuthority (String userCode,List<AuthorityDO> authorityDOS);
+
+
+    /**
+     * 给用户添加菜单
+     * @param userCode 用户
+     * @param menuDTOS 菜单集合
+     * @return 受影响的行
+     */
+    int addUserMenu (String userCode,List<MenuDTO> menuDTOS);
 }

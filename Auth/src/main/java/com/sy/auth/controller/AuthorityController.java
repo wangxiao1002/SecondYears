@@ -66,13 +66,5 @@ public class AuthorityController {
         return  ResultUtil.success(permissions.stream().anyMatch(s -> s.equals(uri)));
     }
 
-    @PostMapping("/accredit/{userCode}")
-    public BaseResult<Integer> accreditAuthority(@PathVariable String userCode,
-                                                 @RequestBody List<AuthorityDO> authorityDOList) {
-        Assert.notEmpty(authorityDOList,"权限集合不能为空");
-        return  ResultUtil.success("添加成共",authorityService.addUserAuthority(userCode,authorityDOList));
-    }
-
-
 
 }

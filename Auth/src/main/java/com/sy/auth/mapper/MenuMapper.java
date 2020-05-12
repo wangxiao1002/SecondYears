@@ -50,4 +50,13 @@ public interface MenuMapper {
      * @return int  受影响的行
      */
     int delMenu(String code);
+
+
+    /**
+     * 给用户附加菜单
+     * @param userCode 用户code
+     * @param menuCodes 菜单码集合
+     * @return 受影响的行
+     */
+    int  insertUserMenu(@Param("userCode") String userCode, @Param("array") String ... menuCodes);
 }

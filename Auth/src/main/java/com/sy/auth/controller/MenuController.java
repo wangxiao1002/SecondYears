@@ -2,9 +2,11 @@ package com.sy.auth.controller;
 
 import com.sy.auth.facde.service.MenuService;
 import com.sy.basis.common.BaseResult;
+import com.sy.basis.domain.AuthorityDO;
 import com.sy.basis.domain.MenuDTO;
 import com.sy.basis.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,8 +50,4 @@ public class MenuController {
     public BaseResult<Integer> updateAuthority(@RequestBody MenuDTO menuDTO) {
         return ResultUtil.success(menuService.updateMenuDTO(menuDTO));
     }
-
-
-
-
 }

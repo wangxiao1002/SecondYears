@@ -52,9 +52,4 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityMapper.delAuthorityDO(code);
     }
 
-    @Override
-    public int addUserAuthority(String userCode, List<AuthorityDO> authorityDOList) {
-        String [] authorityCodes = authorityDOList.stream().map(AuthorityDO::getCode).toArray(String [] :: new);
-        return authorityMapper.insertUserAuthority(userCode,authorityCodes);
-    }
 }
