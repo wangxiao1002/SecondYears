@@ -106,7 +106,16 @@ public class AuthController {
 
 
 
+    @GetMapping("/authority/{userCode}")
+    public BaseResult<List<AuthorityDO>> accreditAuthority(@PathVariable String userCode) {
+        return  ResultUtil.success("添加成功",authService.queryAuthorities(userCode));
+    }
 
+
+    @GetMapping("/menu/{userCode}")
+    public BaseResult<List<MenuDTO>> accreditMenu(@PathVariable String userCode) {
+        return  ResultUtil.success("添加成功",authService.queryMenus(userCode));
+    }
 
 
 

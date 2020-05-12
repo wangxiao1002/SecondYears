@@ -37,6 +37,8 @@ public interface AuthService {
     List<MenuDTO> queryMenus(String userCode);
 
 
+
+
     /**
      * 拆线呢用户权限点
      * @param userCode
@@ -60,4 +62,7 @@ public interface AuthService {
      * @return 受影响的行
      */
     int addUserMenu (String userCode,List<MenuDTO> menuDTOS);
+
+
+
 }
