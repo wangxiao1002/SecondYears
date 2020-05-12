@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *  权限
@@ -49,5 +50,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public int delAuthorityDO(String code) {
         return authorityMapper.delAuthorityDO(code);
+    }
+
+    @Override
+    public int addUserAuthority(String userCode, List<AuthorityDO> authorityDOList) {
+        String [] authorityCodes = authorityDOList.stream().map(AuthorityDO::getCode).toArray(String [] :: new);
+        return authorityMapper.insertUserAuthority(userCode,authorityCodes);
     }
 }

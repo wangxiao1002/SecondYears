@@ -57,4 +57,13 @@ public interface AuthorityMapper {
      * @return int  受影响的行
      */
     int delAuthorityDO(String code);
+
+
+    /**
+     * 给用户附加权限
+     * @param userCode 用户code
+     * @param authorityCodes 权限代码集合
+     * @return 受影响的行
+     */
+    int  insertUserAuthority(@Param("userCode") String userCode, @Param("array") String ... authorityCodes);
 }

@@ -18,7 +18,8 @@
     <insert id="saveLogs" parameterType="java.util.List">
         INSERT INTO t_sy_log ( `user`, `uri`, method, `desc`, query_params, body_params, result, `status` )
         VALUES
-        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+        <foreach collection="list" index="index" item="item"  separator=",">
+            (
             #{item.user},
             #{item.uri},
             #{item.method},
@@ -27,6 +28,7 @@
             #{item.bodyParams},
             #{item.result},
             #{item.status}
+            )
 
         </foreach>
     </insert>

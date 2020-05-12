@@ -54,6 +54,13 @@ public interface AuthorityService {
     int delAuthorityDO(String code);
 
 
+    /**
+     * 给用户添加权限
+     * @param userCode
+     * @param authorityDOS
+     * @return 受影响的行
+     */
+    int addUserAuthority (String userCode,List<AuthorityDO> authorityDOS);
 
 
 }

@@ -6,6 +6,7 @@ import com.sy.basis.common.BaseResult;
 import com.sy.basis.domain.AuthorityDO;
 import com.sy.basis.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,6 +64,13 @@ public class AuthorityController {
         List<AuthorityDO> authorityDOList = authService.queryAuthorities(userCode);
         List<String> permissions =authorityDOList.stream().map(AuthorityDO::getUri).collect(Collectors.toList());
         return  ResultUtil.success(permissions.stream().anyMatch(s -> s.equals(uri)));
+    }
+
+    @PostMapping("/accredit/{userCode}")
+    public BaseResult<Integer> accreditAuthority(@PathVariable String userCode,
+                                                 @RequestBody List<AuthorityDO> authorityDOList) {
+        Assert.notEmpty(authorityDOList,"权限集合不能为空");
+        return  ResultUtil.success("添加成共",authorityService.addUserAuthority(userCode,authorityDOList));
     }
 
 

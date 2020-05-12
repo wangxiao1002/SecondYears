@@ -20,7 +20,7 @@ public class EventBusConfig {
         return new AsyncEventBus(executor());
     }
     private ThreadPoolExecutor executor(){
-        return new ThreadPoolExecutor(3, 2,
+        return new ThreadPoolExecutor(2, 3,
                 10L, TimeUnit.MICROSECONDS,
                 new LinkedBlockingQueue<>(),
                 new MailThreadFactory(),
