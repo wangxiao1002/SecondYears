@@ -8,7 +8,7 @@
 1. Eurake Server (server-center)集群，担任整个注册中心 
 2. 网关 zuul filter(gateway-zuul) 认证鉴权加转发后期使用kong准备代替
 3. 配置中心Spring Config Server(config-center) 配置中心
-4. 基础服务（basis） 提供Snowflake分布式id算法、基础工具类、自定义缓存、日志收集等功能
+4. 基础服务（basis） 提供Snowflake分布式id算法、基础工具类、自定义LRU缓存、日志收集等功能
 ### 功能模块
 1. Auth 管理中心，用户认证、邮件服务、消息通知等以及后台管理功能
 2. Shope 商城 提供购买礼物，抽奖、定制化礼物等功能
@@ -20,5 +20,14 @@
 2. 部署配置中心，将git密码修改自己的，具体配置在讲解在wiki:[项目配置里面](https://github.com/wangxiao1002/SecondYears/wiki/%E9%A1%B9%E7%9B%AE%E9%9C%80%E8%A6%81%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
 3. 启动单个服务
 4. 启动前端 npm run serve
+## 演示
+体验地址
+## 项目进度和实现功能
+1. 基础服务（eurake config zuul） 构建 done
+3. 自定义缓存，日志异步收集、异步发邮件接口 done
+2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
+3. SYIM 模块构建 实现单聊、群聊功能 doing
+
+
  
  
