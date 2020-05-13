@@ -9,6 +9,7 @@
 2. 网关 zuul filter(gateway-zuul) 认证鉴权加转发后期使用kong准备代替
 3. 配置中心Spring Config Server(config-center) 配置中心
 4. 基础服务（basis） 提供Snowflake分布式id算法、基础工具类、自定义LRU缓存、日志收集等功能
+5. 监控服务Spring admin（monitor）监控服务状态、内存信息等
 ### 功能模块
 1. Auth 管理中心，用户认证、邮件服务、消息通知等以及后台管理功能
 2. Shope 商城 提供购买礼物，抽奖、定制化礼物等功能
