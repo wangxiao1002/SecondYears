@@ -1,4 +1,4 @@
-package com.sy.auth.config;
+package com.sy.auth.mail;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,6 +1,7 @@
 package com.sy.auth.config;
 
 import com.google.common.eventbus.AsyncEventBus;
+import com.sy.auth.mail.MailThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
