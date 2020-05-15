@@ -32,4 +32,8 @@ public class LogUtil {
     protected LogEntity getLog() {
         return LogManager.pop();
     }
+
+    protected boolean isEmpty () {
+        return LogManager.isEmpty();
+    }
 }

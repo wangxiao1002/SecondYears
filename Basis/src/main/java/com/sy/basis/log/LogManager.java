@@ -45,21 +45,10 @@ public class LogManager {
     }
 
 
+    protected static boolean isEmpty () {
+         return LOG_QUEUE.isEmpty();
+    }
 
 
 }
 
- class LogThreadFactory implements ThreadFactory {
-    private static final AtomicInteger poolNumber = new AtomicInteger(1);
-    private final AtomicInteger threadNumber = new AtomicInteger(1);
-    private final String namePrefix;
-
-    public LogThreadFactory() {
-        namePrefix = "LogThread-" + poolNumber.getAndIncrement() + "-";
-    }
-
-    @Override
-    public Thread newThread(Runnable r) {
-        return new Thread( r, namePrefix + threadNumber.getAndIncrement());
-    }
-}
