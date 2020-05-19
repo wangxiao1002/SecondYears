@@ -77,5 +77,11 @@ public class ChatManager {
     }
 
 
+    protected static List<Session> getSessions(String chatId) {
+        return CHAT_SESSIONS.get(chatId);
+    }
+
+
+
 
 }

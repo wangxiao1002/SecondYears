@@ -12,7 +12,7 @@ import java.util.List;
  * @author wangxiao
  * @since
  */
-public class ResultUtil {
+public final class ResultUtil {
 
     private ResultUtil() {
     }

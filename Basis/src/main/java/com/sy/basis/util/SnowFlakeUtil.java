@@ -13,7 +13,7 @@ import java.util.Enumeration;
  * @author wangxiao
  * @since 1.1
  */
-public class SnowFlakeUtil {
+public final class SnowFlakeUtil {
 
 
     private final static long EPOCH = 12888349746579L;

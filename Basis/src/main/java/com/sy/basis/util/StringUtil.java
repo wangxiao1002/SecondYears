@@ -1,13 +1,13 @@
 package com.sy.basis.util;
 
-import com.sy.basis.cache.CacheManager;
+
 
 /**
  * //字符串工具类
  * @author wangxiao
  * @since 1.1
  */
-public class StringUtil {
+public final class StringUtil {
 
     public static final String EMPTY_STRING = "";
 
@@ -26,4 +26,5 @@ public class StringUtil {
     public static boolean isNotBlank(String source) {
         return !(isBlank(source));
     }
+    
 }
