@@ -47,12 +47,6 @@ public class ChatWebSocket {
         sendMessage(message, chatId, authId);
     }
 
-    @OnError
-    public void OnError(@PathParam("chatId") String chatId,
-                 @PathParam("authId") String authId) {
-        sendMessage("系统出现异常了,正在紧急处理！",chatId,authId);
-    }
-
     @OnClose
     public void OnClose (Session session,
                          @PathParam("chatId") String chatId,
