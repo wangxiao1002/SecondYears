@@ -28,8 +28,8 @@
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
 3. SYIM 模块构建 实现单聊、群聊功能 doing
-4. sy-web waiting
-5. Shope 商城 waiting
+4. sy-web doing
+5. Shope 商城 doing
 
 
  
