@@ -1,15 +1,12 @@
 package com.sy.syimserver.core;
 
-import com.sy.basis.domain.LoginDO;
-import com.sy.syimserver.service.facde.AuthFeignService;
-import com.sy.syimserver.support.ChatRunTimeException;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.util.Optional;
+
 import java.util.concurrent.FutureTask;
 
 /**
@@ -18,12 +15,9 @@ import java.util.concurrent.FutureTask;
  * @since 1.1
  */
 @Component
-@ServerEndpoint("/chat/{chatId}/{authId}")
+@ServerEndpoint("/chat/{chatId}")
 public class ChatWebSocket {
 
-
-    @Autowired
-    private AuthFeignService authFeignService;
 
     /**
      * 打开连接
@@ -34,7 +28,7 @@ public class ChatWebSocket {
     @OnOpen
     public void onOpen(Session session,
                        @PathParam("chatId") String chatId,
-                       @PathParam("authId") String authId) {
+                       String authId) {
         ChatManager.addSession(chatId,session);
         sendWelcome(chatId,authId);
     }
@@ -56,9 +50,14 @@ public class ChatWebSocket {
     }
 
 
+    @OnError
+    public void onError(Session session, Throwable error) {
+        error.printStackTrace();
+    }
+
+
     private void sendWelcome (String chatId,String authId) {
-        LoginDO authDo = authFeignService.queryUserByUserCode(authId);
-        String label = Optional.ofNullable(authDo).map(LoginDO::getLabel).orElseThrow(() ->new ChatRunTimeException("用户没权限假如"));
+        String label = "";
         sendMessage(String.format("欢迎用户:%s加入聊天室",label),chatId,authId);
     }
 
