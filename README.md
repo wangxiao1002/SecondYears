@@ -11,10 +11,11 @@
 4. 基础服务（basis） 提供Snowflake分布式id算法、基础工具类、自定义LRU缓存、日志收集等功能
 5. 监控服务Spring admin（monitor）监控服务状态、内存信息等
 ### 功能模块
-1. Auth 管理中心，用户认证、邮件服务、消息通知等以及后台管理功能
+1. Auth 管理中心，用户认证、邮件服务及后台管理功能
 2. Shope 商城 提供购买礼物，抽奖、定制化礼物等功能
-3. SYIM 通讯模块，提供单聊和群聊方式聊天，和通告信息
-4. sy-web 前端界面
+3. Message 消息系统、通讯模块，
+4. SYIM 提供单聊和群聊方式聊天，和通告信息
+5. sy-web 前端界面
 ## 发布构建
 **每个服务都提供Docker Image可快速启动**
 1. 首先部署注册中心，SpringBoot 正常启动
@@ -27,7 +28,7 @@
 1. 基础服务（eurake config zuul） 构建 done
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
-3. SYIM 模块构建 实现单聊、群聊功能 doing
+3. Message/ 消息模块构建 实现单聊、群聊和消息推送提醒功能 doing
 4. sy-web doing
 5. Shope 商城 doing
 
