@@ -26,4 +26,6 @@ public class ChatWebSocket {
 
     @OnError
     public void onError (Session session) {}
+
+    private void  sendMessage (String chatId,SocketMessage message) {}
 }
