@@ -1,0 +1,8 @@
+server:
+  port: 38095
+spring:
+  application:
+    name: NotifyServerApplication
+push:
+  server:
+    port: 38096
