@@ -1,6 +1,9 @@
 # Sy-web
 
 > Sy-web  前端界面
+## 已经完成功能呢
+> 聊天室
+> socket 链接
 
 ## Build Setup
 
