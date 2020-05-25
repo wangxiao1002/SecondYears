@@ -1,1 +1,10 @@
 
+server:
+  port: 38097
+spring:
+  application:
+    name: ShopeApplication
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
