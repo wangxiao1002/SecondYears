@@ -1,6 +1,6 @@
 package com.sy.shope.entity;
 
-import java.math.BigDecimal;
+
 
 /**
  * 奖品
@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  */
 public class PrizeDomain {
 
+    private String code;
 
     private String label;
 
@@ -57,10 +58,19 @@ public class PrizeDomain {
         this.count = count;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "PrizeDomain{" +
-                "label='" + label + '\'' +
+                "code='" + code + '\'' +
+                ", label='" + label + '\'' +
                 ", type=" + type +
                 ", probability=" + probability +
                 ", count=" + count +
