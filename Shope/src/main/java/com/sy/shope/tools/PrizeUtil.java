@@ -3,6 +3,7 @@ package com.sy.shope.tools;
 import com.sy.shope.entity.PrizeDomain;
 
 import java.text.DecimalFormat;
+
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class PrizeUtil {
 
 
-    public String calcPrizeCode (List<PrizeDomain> prizeDomains) {
+    public static String calcPrizeCode(List<PrizeDomain> prizeDomains) {
         DecimalFormat format = new DecimalFormat("#####00.00");
 
         String code ="";
@@ -23,16 +24,16 @@ public class PrizeUtil {
         }
         double random= Math.random();
 
-        double d1 = 0;
-        double d2 = 0;
+        double start = 0;
+        double end = 0;
         for(int i=0;i<prizeDomains.size();i++){
-            d2 += Double.parseDouble(String.valueOf(prizeDomains.get(i).getProbability()))/sumWeight;
+            end += Double.parseDouble(String.valueOf(prizeDomains.get(i).getProbability()))/sumWeight;
             if(i==0){
-                d1 = 0;
+                start = 0;
             }else{
-                d1 +=Double.parseDouble(String.valueOf(prizeDomains.get(i-1).getProbability()))/sumWeight;
+                start += Double.parseDouble(String.valueOf(prizeDomains.get(i-1).getProbability()))/sumWeight;
             }
-            if(random >= d1 && random <= d2){
+            if(random >= start && random <= end){
                 code = prizeDomains.get(i).getCode();
                 break;
             }
@@ -41,8 +42,4 @@ public class PrizeUtil {
         return code;
     }
 
-
-    public static void main(String[] args) {
-
-    }
 }
