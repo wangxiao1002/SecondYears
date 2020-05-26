@@ -14,9 +14,15 @@ public class PrizeDomain {
 
     private PrizeType type;
 
-    private BigDecimal probability;
+    /**
+     * 抽中权重
+     */
+    private int probability;
 
-    private BigDecimal count;
+    /**
+     * 库存
+     */
+    private int count;
 
 
     public String getLabel() {
@@ -35,19 +41,19 @@ public class PrizeDomain {
         this.type = type;
     }
 
-    public BigDecimal getProbability() {
+    public int getProbability() {
         return probability;
     }
 
-    public void setProbability(BigDecimal probability) {
+    public void setProbability(int probability) {
         this.probability = probability;
     }
 
-    public BigDecimal getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(BigDecimal count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
