@@ -1,11 +1,15 @@
 package com.sy.shope.annation;
 
+import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 注解限流
  * @author wangxiao
  */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface RateLimit {
 
     /**
