@@ -11,7 +11,7 @@ public @interface RateLimit {
     /**
      * 每秒向桶放入令牌的数量
      */
-    double perSecond() default Double.MAX_VALUE;
+    double perSecond() default 100;
     /**
      * 获取令牌的等待时间
      *

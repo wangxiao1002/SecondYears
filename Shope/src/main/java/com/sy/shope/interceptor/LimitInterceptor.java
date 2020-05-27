@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 public class LimitInterceptor {
 
 
-    private final RateLimiter rateLimiter = RateLimiter.create(100);
+    private final RateLimiter rateLimiter = RateLimiter.create(1000);
 
     @Around("@annotation(com.sy.shope.annation.RateLimit)")
     public Object interceptor(ProceedingJoinPoint pjp) throws Throwable {
