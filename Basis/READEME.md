@@ -29,4 +29,6 @@
 3. LogThread 日志线程
 4. LogManager 日志管理日 包含阻塞队列操作
 5. LogSendService 日志发送service 具体业务需要自己实现，并通过LogThread构造参数传递进入
+## 遗留问题 
+1. 使用okhttp 异步发送时候不能使用微服务名
 
