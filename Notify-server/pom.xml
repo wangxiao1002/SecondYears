@@ -41,6 +41,12 @@
             <artifactId>netty-socketio</artifactId>
             <version>1.7.17</version>
         </dependency>
+        <!--计算经纬度距离-->
+        <dependency>
+            <groupId>com.spatial4j</groupId>
+            <artifactId>spatial4j</artifactId>
+            <version>0.5</version>
+        </dependency>
 
     </dependencies>
 
