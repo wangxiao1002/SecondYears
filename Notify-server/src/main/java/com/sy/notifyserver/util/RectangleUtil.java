@@ -34,7 +34,7 @@ public class RectangleUtil {
      * @param userLat   纬度2
      * @return 返回距离，单位km
      */
-    private double getDistance(Double longitude, Double latitude, double userLng, double userLat) {
+    public static double getDistance(Double longitude, Double latitude, double userLng, double userLat) {
         return spatialContext.calcDistance(spatialContext.makePoint(userLng, userLat),
                 spatialContext.makePoint(longitude, latitude)) * DistanceUtils.DEG_TO_KM;
     }
