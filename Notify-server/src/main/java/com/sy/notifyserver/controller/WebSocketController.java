@@ -47,12 +47,13 @@ public class WebSocketController {
         Rectangle rectangle = RectangleUtil.getRectangle(distance, userLng, userLat);
 
         List<WebSocketRoom> roomList = socketService.querySocketRoomByCoordinate(rectangle.getMinX(), rectangle.getMaxX(), rectangle.getMinY(), rectangle.getMaxY());
-
         roomList = roomList.stream()
                 .filter(a -> RectangleUtil.getDistance(a.getRoomLng(), a.getRoomLat(), userLng, userLat) <= distance)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(new JsonResult());
+        return ResponseEntity.ok(JsonResult.build(200).value(roomList));
     }
+
+
 
 
 }
