@@ -1,9 +1,11 @@
 package com.sy.notifyserver.service.impl;
 
 import com.sy.notifyserver.domain.WebSocketRoom;
+import com.sy.notifyserver.mapper.WebSocketRoomMapper;
 import com.sy.notifyserver.service.WebSocketService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -13,8 +15,11 @@ import java.util.List;
  */
 @Service
 public class WebSocketServiceImpl implements WebSocketService {
+
+    @Resource
+    private WebSocketRoomMapper socketRoomMapper;
     @Override
     public List<WebSocketRoom> querySocketRoomByCoordinate(double minX, double maxX, double minY, double maxY) {
-        return null;
+        return socketRoomMapper.selectSocketRoomByCoordinate(minX, maxX, minY, maxY);
     }
 }
