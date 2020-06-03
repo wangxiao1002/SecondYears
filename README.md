@@ -28,7 +28,7 @@
 1. 基础服务（eurake config zuul） 构建 done
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
-3. Notify/ 消息模块构建 实现单聊、群聊和消息推送提醒功能 重构中
+3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 doing
 4. sy-web doing
 5. Shope 商城 doing
 
