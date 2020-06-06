@@ -26,22 +26,29 @@ public class LocalLockInterceptor {
             .build();
 
     @Around("@annotation(com.sy.shope.annation.LocalLock)")
-    public Object interceptor(ProceedingJoinPoint joinPoint) {
+    public Object interceptor(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        LocalLock localLock = method.getAnnotation(LocalLock.class);
-        String key = genenreateKey(localLock.key(),method.getName());
-        if (CACHES.getIfPresent(key) != null) {
-            throw new RuntimeException("短时间内不能重复提交");
+        Object result = joinPoint.proceed();
+        if (method.isAnnotationPresent(LocalLock.class)) {
+            LocalLock localLock = method.getAnnotation(LocalLock.class);
+            String key = genenreateKey(localLock.key(),method.getName());
+            if (CACHES.getIfPresent(key) != null) {
+                throw new RuntimeException("短时间内不能重复提交");
+            }
+            CACHES.put(key, key);
+            try {
+                return joinPoint.proceed();
+            } catch (Throwable throwable) {
+                throw new RuntimeException("服务器异常");
+            } finally {
+                CACHES.invalidate(key);
+            }
         }
-        CACHES.put(key, key);
-        try {
-            return joinPoint.proceed();
-        } catch (Throwable throwable) {
-            throw new RuntimeException("服务器异常");
-        } finally {
-            CACHES.invalidate(key);
-        }
+
+        return result;
+
+
     }
 
     private String genenreateKey (String key,String method) {
