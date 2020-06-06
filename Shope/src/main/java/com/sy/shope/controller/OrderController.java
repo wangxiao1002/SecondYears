@@ -5,6 +5,7 @@ import com.sy.shope.entity.Order;
 import com.sy.shope.entity.OrderDTO;
 import com.sy.shope.service.facade.IOrderService;
 import com.sy.shope.support.JsonResult;
+import com.sy.shope.tools.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,13 @@ public class OrderController {
     @Autowired
     private IOrderService orderService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping
-    public ResponseEntity<JsonResult<Order>> addOrder(@Valid  @RequestBody List<OrderDTO> params) {
-        return ResponseEntity.ok(JsonResult.success(orderService.addOrders(params,"123")));
+    public ResponseEntity<JsonResult<Order>> addOrder(@Valid  @RequestBody List<OrderDTO> params,@RequestHeader String token) {
+        String userId = jwtUtil.getTokenUserId(token);
+        return ResponseEntity.ok(JsonResult.success(orderService.addOrders(params,userId)));
     }
 
     @GetMapping("/{orderId}")

@@ -1,6 +1,7 @@
 package com.sy.shope.support;
 
-import com.thinkingmagic.ordering.service.IOrderService;
+
+import com.sy.shope.service.facade.IOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

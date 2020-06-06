@@ -1,9 +1,11 @@
 package com.sy.shope.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sy.shope.entity.Good;
 import com.sy.shope.service.facade.IGoodService;
 import com.sy.shope.support.JsonResult;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -25,14 +27,14 @@ public class GoodController {
     private IGoodService goodService;
 
     @GetMapping("/{page}")
-    public ResponseEntity<JsonResult<Good>> getGoodsOfPage(@PathVariable int page) {
-        return ResponseEntity.ok(JsonResult.success(goodService.getById(page)));
+    public ResponseEntity<JsonResult<Page<Good>>> getGoodsOfPage(@PathVariable int page) {
+        return ResponseEntity.ok(JsonResult.success(goodService.queryOrderPage(page)));
     }
 
-//    @GetMapping("/details/{spuId}")
-//    public ResponseEntity<JsonResult<Good>> getGoodDetails(@PathVariable String spuId) {
-//        Assert.notNull(spuId,"spu id is must`t null ");
-//        return ResponseEntity.ok(JsonResult.success(goodService.queryGoodDetails(spuId)));
-//    }
+    @GetMapping("/details/{spuId}")
+    public ResponseEntity<JsonResult<Good>> getGoodDetails(@PathVariable String spuId) {
+        Assert.notNull(spuId,"spu id is must`t null ");
+        return ResponseEntity.ok(JsonResult.success(goodService.queryGoodDetails(spuId)));
+    }
 
 }
