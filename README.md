@@ -21,14 +21,14 @@
 1. 首先部署注册中心，SpringBoot 正常启动
 2. 部署配置中心，将git密码修改自己的，具体配置在讲解在wiki:[项目配置里面](https://github.com/wangxiao1002/SecondYears/wiki/%E9%A1%B9%E7%9B%AE%E9%9C%80%E8%A6%81%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
 3. 启动单个服务
-4. 启动前端 npm run serve
+4. 启动前端 npm run dev
 ## 演示
 体验地址
 ## 项目进度和实现功能
 1. 基础服务（eurake config zuul） 构建 done
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
-3. Notify/ 消息模块构建 实现单聊、群聊和消息推送提醒功能 重构中
+3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 doing
 4. sy-web doing
 5. Shope 商城 doing
 
