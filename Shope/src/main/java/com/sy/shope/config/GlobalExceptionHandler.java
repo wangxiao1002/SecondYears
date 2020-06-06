@@ -3,6 +3,7 @@ package com.sy.shope.config;
 
 
 import com.sy.shope.support.JsonResult;
+import com.sy.shope.support.OrderingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,7 +43,12 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity<JsonResultVO>
      */
     @ExceptionHandler(value = {RuntimeException.class})
-    public ResponseEntity<JsonResult> handleResourceNotFoundException(RuntimeException e) {
+    public ResponseEntity<JsonResult<String>> handleResourceNotFoundException(RuntimeException e) {
         return ResponseEntity.ok(JsonResult.fail(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = {OrderingException.class})
+    public ResponseEntity<JsonResult<String>> handleOrderingException(OrderingException e) {
+        return ResponseEntity.ok(JsonResult.fail(e.getCode(),e.getMessage()));
     }
 }

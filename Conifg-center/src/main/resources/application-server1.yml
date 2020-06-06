@@ -11,7 +11,7 @@ spring:
         git:
           uri: https://github.com/wangxiao1002/config
           username: wangxiao1002
-          password: *******
+          password: HEchuTIANya1.
           # 文件夹
           search-paths: config
           default-label: master
@@ -22,7 +22,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:38090/eureka/,http://127.0.0.1:38091/eureka/
+      defaultZone: http://172.17.233.201:38090/eureka/,http://172.17.233.201:38091/eureka/
     # 从eureka 上获取服务列表时间 30
     registry-fetch-interval-seconds: 30
     # 复制实例变化信息到eureka服务器所需要的时间间隔

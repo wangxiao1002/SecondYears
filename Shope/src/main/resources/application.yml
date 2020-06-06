@@ -1,10 +1,31 @@
 
 server:
   port: 38097
+  servlet:
+    context-path: /shope
 spring:
   application:
     name: ShopeApplication
-mybatis:
-  mapper-locations: classpath:mappers/*.xml
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://123.57.243.207:3306/sy
+    username: root
+    password: HEchuTIANya1.
+    hikari:
+      pool-name: ShopeDataSourcePool
+      minimum-idle: 10
+      maximum-pool-size: 60
+      max-lifetime: 120000
+      auto-commit: false
+      idle-timeout: 30000
+      connection-timeout: 60000
+      connection-test-query: select 1
+mybatis-plus:
+  mapper-locations: lasspath:mappers/*.xml
+  global-config:
+    db-config:
+      id-type: ID_WORKER_STR
   configuration:
     map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

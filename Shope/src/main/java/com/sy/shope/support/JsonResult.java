@@ -5,18 +5,18 @@ package com.sy.shope.support;
  * @author wangxiao
  * @since 11
  */
-public class JsonResult {
-    private int code;
+public class JsonResult<T> {
+    private String code;
 
     private String message;
 
-    private Object data;
+    private T data;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -32,37 +32,45 @@ public class JsonResult {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public JsonResult code (int code) {
+    public JsonResult<T> code (String code) {
         this.code = code;
         return this;
     }
-    public JsonResult message (String message) {
+    public JsonResult<T> message (String message) {
         this.message = message;
         return this;
     }
-    public JsonResult data (Object data) {
+    public JsonResult<T> data (T data) {
         this.data = data;
         return this;
     }
 
     private JsonResult () {}
 
-    private static  JsonResult build () {
-        return new JsonResult();
+    private static <T> JsonResult<T> build () {
+        return new JsonResult<T>();
     }
 
-    public static JsonResult fail (String message) {
-        return build().code(200).message(message);
+    public static <T>JsonResult<T> fail (String message) {
+        JsonResult<T> jsonResult = build();
+        return jsonResult.code("200").message(message);
+    }
+    public static <T>JsonResult<T> fail (String code,String message) {
+        JsonResult<T> jsonResult = build();
+        return jsonResult.code(code).message(message);
     }
 
-    public static JsonResult success (Object data) {
-        return build().code(200).data(data);
+    public static <T>JsonResult<T> success (T data) {
+        JsonResult<T> jsonResult = build();
+        return jsonResult.code("200").data(data);
+
     }
-    public static JsonResult success (String message,Object data) {
-        return build().code(200).data(data).message(message);
+    public static <T>JsonResult<T> success (String message,T data) {
+        JsonResult<T> jsonResult = build();
+        return jsonResult.code("200").message(message).data(data);
     }
 }
