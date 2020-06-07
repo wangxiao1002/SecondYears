@@ -1,6 +1,7 @@
 package com.sy.shope.controller;
 
 
+import com.sy.shope.annation.LocalLock;
 import com.sy.shope.entity.Order;
 import com.sy.shope.entity.OrderDTO;
 import com.sy.shope.service.facade.IOrderService;
@@ -29,6 +30,7 @@ public class OrderController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @LocalLock(value = "addOrder")
     @PostMapping
     public ResponseEntity<JsonResult<Order>> addOrder(@Valid  @RequestBody List<OrderDTO> params,@RequestHeader String token) {
         String userId = jwtUtil.getTokenUserId(token);

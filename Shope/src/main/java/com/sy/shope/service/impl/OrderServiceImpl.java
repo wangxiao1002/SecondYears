@@ -14,6 +14,7 @@ import com.sy.shope.service.facade.ISkuService;
 import com.sy.shope.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -109,7 +110,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Override
     public Order queryOrderByOderId(String orderId) {
         Order order = getById(orderId);
+        Assert.notNull(order,"订单不存在");
+
         order.setOrderInfos(orderInfoService.queryOderInfoByOrderId(orderId));
-        return null;
+        return order;
     }
 }

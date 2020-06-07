@@ -1,6 +1,7 @@
 package com.sy.shope.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sy.shope.entity.OrderInfo;
 import com.sy.shope.mappers.OrderInfoMapper;
@@ -21,6 +22,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper,OrderInfo>
 
     @Override
     public List<OrderInfo> queryOderInfoByOrderId(String orderId) {
-        return baseMapper.selectOderInfoByOrderId(orderId);
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id",orderId).orderByDesc("create_time");
+        return baseMapper.selectList(queryWrapper);
     }
 }
