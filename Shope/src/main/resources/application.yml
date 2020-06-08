@@ -7,7 +7,7 @@ spring:
     name: ShopeApplication
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://123.57.243.207:3306/sy
+    url:
     username: root
     password: HEchuTIANya1.
     hikari:
