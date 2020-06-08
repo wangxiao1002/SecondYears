@@ -73,7 +73,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         OrderPriceDTO orderPriceDTO = priceService.calcOrderPrice(orderInfos);
         order.setPrice(orderPriceDTO.getPrice());
         order.setPayPrice(orderPriceDTO.getPayPrice());
-        if (save(order)) {
+        if (!save(order)) {
             throw new OrderingException("200","下单异常");
         }
         orderPriceDTO.getOrderInfos().forEach(e->e.setOrderId(order.getId()));
@@ -111,7 +111,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Order queryOrderByOderId(String orderId) {
         Order order = getById(orderId);
         Assert.notNull(order,"订单不存在");
-
         order.setOrderInfos(orderInfoService.queryOderInfoByOrderId(orderId));
         return order;
     }
