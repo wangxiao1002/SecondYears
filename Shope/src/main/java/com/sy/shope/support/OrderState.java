@@ -20,7 +20,9 @@ public enum OrderState implements IEnum<Integer> {
     /**
      * 已完成
      */
-    DONE(1,"支付完成,待取货");
+    DONE(1,"支付完成,待取货"),
+
+    REFUND(-2,"退款");
 
     private int value;
     private String desc;

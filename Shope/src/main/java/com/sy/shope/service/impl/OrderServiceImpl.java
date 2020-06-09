@@ -106,6 +106,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         return a;
     }
 
+    @Override
+    public boolean refundOrder(String orderId) {
+        Order order = getById(orderId);
+        boolean a = Optional.ofNullable(order).map(e ->{
+            e.setState(OrderState.REFUND);
+            return updateById(order);})
+                .orElse(false);
+        return a;
+    }
 
     @Override
     public Order queryOrderByOderId(String orderId) {

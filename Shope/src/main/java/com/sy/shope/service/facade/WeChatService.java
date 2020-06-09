@@ -21,7 +21,7 @@ public interface WeChatService {
      * @author wangxiao
      * @return JsonResult
      */
-    JsonResult unifiedOrder(String orderNo, BigDecimal amount, String body) ;
+    JsonResult<Map<String,String>>  unifiedOrder(String orderNo, BigDecimal amount, String body) ;
 
     /**
      * 订单支付异步通知
@@ -41,5 +41,5 @@ public interface WeChatService {
      * @throws Exception
      * @return String
      */
-    JsonResult<String> refund(String orderNo, BigDecimal amount, String refundReason) throws Exception;
+    JsonResult<String>  refund(String orderNo, BigDecimal amount, String refundReason) throws Exception;
 }

@@ -44,6 +44,14 @@ public interface IOrderService extends IService<Order> {
       */
      boolean successOrder(String orderId);
 
+
+    /**
+     *  退款
+     * @param orderId
+     * @return
+     */
+    boolean refundOrder(String orderId);
+
      /**
       *  查询订单
       * @author wangxiao
@@ -52,4 +60,6 @@ public interface IOrderService extends IService<Order> {
       * @return Order
       */
      Order queryOrderByOderId(String orderId);
+
+
 }
