@@ -30,7 +30,7 @@
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
 3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 doing
 4. sy-web doing
-5. Shope 商城 sku,spu 计算价格 done 微信支付doing
+5. Shope 商城 sku,spu 计算价格 done 微信支付done
 
 
 
