@@ -7,9 +7,12 @@ import com.sy.shope.entity.Order;
 import com.sy.shope.service.facade.IOrderService;
 import com.sy.shope.service.facade.WeChatService;
 import com.sy.shope.support.JsonResult;
+import com.sy.shope.support.OrderEvent;
 import com.sy.shope.support.OrderingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.core.ApplicationPushBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,6 +39,9 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Autowired
     private WeChatConfig wxPayConfig;
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     @Override
     public JsonResult<Map<String,String>> unifiedOrder(String orderNo, BigDecimal amount, String body) {
@@ -94,6 +100,7 @@ public class WeChatServiceImpl implements WeChatService {
                 if (success.equals(returnCode)) {
                     if (! StringUtils.isEmpty(outTradeNo)) {
                         orderService.successOrder(outTradeNo);
+                        publisher.publishEvent(new OrderEvent(outTradeNo));
                         log.info("微信手机支付回调成功,订单号:{}", outTradeNo);
                         xmlBack = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
                     }

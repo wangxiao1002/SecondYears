@@ -1,9 +1,11 @@
 package com.sy.shope.config;
 
 import com.sy.shope.support.OrderEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
+
+
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,14 +13,16 @@ import org.springframework.stereotype.Component;
  * @author wangxiao
  * @since 1.1
  */
+@Slf4j
 @Component
 public class MessageListener  {
 
-    @EventListener
 
-    public void processAccountCreatedEvent1(OrderEvent event) {
+    @EventListener
+    @Async(value = "asyncExecutor")
+    public void successOrder(OrderEvent event) {
         // TODO
-        System.out.println(event.getOrderId());
+        log.info("订单完成支付====>id:{},开始发送通知",event.getOrderId());
     }
 
 

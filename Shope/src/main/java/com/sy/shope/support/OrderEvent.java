@@ -1,6 +1,7 @@
 package com.sy.shope.support;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -9,12 +10,16 @@ import java.time.LocalDateTime;
  * @author wangxiao
  * @since 1.1
  */
-@Data
+@Setter
+@Getter
 public class OrderEvent {
 
     private String orderId;
 
     private LocalDateTime createTime;
 
-
+    public OrderEvent(String orderId) {
+        this.orderId = orderId;
+        this.createTime = LocalDateTime.now();
+    }
 }
