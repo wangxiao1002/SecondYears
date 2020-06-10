@@ -20,12 +20,12 @@ public class WeChatConfig extends WXPayConfig {
     /**
      * appID
      */
-    private String appID;
+    private String appId;
 
     /**
      * 商户号
      */
-    private String mchID;
+    private String mchId;
 
     /**
      * API 密钥
@@ -75,12 +75,12 @@ public class WeChatConfig extends WXPayConfig {
 
     @Override
     public String getAppId() {
-        return appID;
+        return appId;
     }
 
     @Override
     public String getMchId() {
-        return mchID;
+        return mchId;
     }
 
     @Override
@@ -118,4 +118,35 @@ public class WeChatConfig extends WXPayConfig {
     }
 
 
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public void setMchId(String mchId) {
+        this.mchId = mchId;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setCertPath(String certPath) {
+        this.certPath = certPath;
+    }
+
+    public void setHttpConnectTimeoutMs(int httpConnectTimeoutMs) {
+        this.httpConnectTimeoutMs = httpConnectTimeoutMs;
+    }
+
+    public void setHttpReadTimeoutMs(int httpReadTimeoutMs) {
+        this.httpReadTimeoutMs = httpReadTimeoutMs;
+    }
+
+    public void setPayNotifyUrl(String payNotifyUrl) {
+        this.payNotifyUrl = payNotifyUrl;
+    }
+
+    public void setRefundNotifyUrl(String refundNotifyUrl) {
+        this.refundNotifyUrl = refundNotifyUrl;
+    }
 }

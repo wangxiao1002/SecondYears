@@ -7,7 +7,7 @@ spring:
     name: ShopeApplication
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url:
+    url: jdbc:mysql://123.57.243.207:3306/sy
     username: root
     password: HEchuTIANya1.
     hikari:
@@ -31,3 +31,11 @@ mybatis-plus:
 jwt:
   secret: '!@#$SCsNjyHf%$'
   expire: 3600
+pay:
+  we-chat:
+    appId: oodd
+    mchId: dd
+    key: 'xxxxxxxxxxxxx'
+    certPath: static/cert/wxpay/apiclient_cert.p12
+    payNotifyUrl: http://xxx.com/wxPay/notify
+    refundNotifyUrl: 'a'
