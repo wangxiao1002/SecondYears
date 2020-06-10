@@ -137,3 +137,35 @@ SET FOREIGN_KEY_CHECKS = 1;
 ```
 spu 是一个商品，举例小米10破，sku是具体细化规格商品，举例小米10破 64G 黑金色，假设规格有内存（64G，128G）、颜色(黑色，白色)就会有笛卡尔积的数量sku,(4)</br>
 商品规格按照规格组来划分，比如有内存、颜色
+
+## eventListener
+1. 之前事件监听，需要定义事件ApplicationEventTest实体类继承ApplicationEvent,和监听器ApplicationListenerTest 实现 ApplicationListener<ApplicationEventTest> </br>
+中的onApplicationEvent方法， 事件的发布和监听器发布都是使用application与applicationContext,例如
+```java
+    // 发布监听器
+    application.addListeners(new ApplicationListenerTest());
+    Set<ApplicationListener<?>> listeners = application.getListeners();
+     ConfigurableApplicationContext context =  application.run(args);
+    //发布事件
+     context.publishEvent(new ApplicationEventTest(new Object()));
+
+```
+2.现在使用注解
+```java
+@Component
+public class MessageListener {
+
+    @EventListener
+    public void processAccountCreatedEvent1(OrderEvent event) {
+        // TODO
+        System.out.println(event.getOrderId());
+    }
+
+   //写多个方法来监听不通事件和统一事件的不通处理（例如新建账单时候发送邮件和提醒）,使用@Order 和Ordered 接口来控制顺序
+
+   // 事件 发布注入private ApplicationEventPublisher publisher; 调用方法
+  @Autowired
+  private ApplicationEventPublisher publisher;
+  publisher.publishEvent(new OrderEvent(account))
+
+```
