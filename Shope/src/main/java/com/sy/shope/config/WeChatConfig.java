@@ -53,11 +53,27 @@ public class WeChatConfig extends WXPayConfig {
     private String payNotifyUrl;
 
 
-
     /**
      * 微信退款异步通知地址
      */
     private String refundNotifyUrl;
+
+    /**
+     * 微信二维码
+     */
+    private String authUrl;
+
+    /**
+     * 微信授权回调地址
+     */
+    private String redirectUrl;
+
+    /**
+     * token
+     */
+    private String accessToken;
+
+
 
     public WeChatConfig() {
         super();
@@ -103,7 +119,7 @@ public class WeChatConfig extends WXPayConfig {
 
             @Override
             public DomainInfo getDomain(WXPayConfig config) {
-                return new IWXPayDomain.DomainInfo("", true);
+                return new IWXPayDomain.DomainInfo("api.mch.weixin.qq.com", true);
             }
         };
         return iwxPayDomain;
@@ -148,5 +164,33 @@ public class WeChatConfig extends WXPayConfig {
 
     public void setRefundNotifyUrl(String refundNotifyUrl) {
         this.refundNotifyUrl = refundNotifyUrl;
+    }
+
+    public String getCertPath() {
+        return certPath;
+    }
+
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    public void setAuthUrl(String authUrl) {
+        this.authUrl = authUrl;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

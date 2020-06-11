@@ -10,13 +10,14 @@ import com.sy.shope.support.JsonResult;
 import com.sy.shope.support.OrderEvent;
 import com.sy.shope.support.OrderingException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.core.ApplicationPushBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -158,5 +159,23 @@ public class WeChatServiceImpl implements WeChatService {
             return JsonResult.fail(returnMsg);
         }
 
+    }
+
+    @Override
+    public String weChatAuth() throws UnsupportedEncodingException {
+        String url = wxPayConfig.getAuthUrl();
+        String oauthUrl = url+"?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+        String redirectUrl = URLEncoder.encode(wxPayConfig.getRedirectUrl(),"utf-8");
+        oauthUrl =  oauthUrl.replace("APPID",wxPayConfig.getAppId())
+                .replace("REDIRECT_URI",redirectUrl);
+        log.info(oauthUrl);
+        return oauthUrl;
+    }
+
+    @Override
+    public String getAccessToken(String code) {
+        String url = wxPayConfig.getAccessToken();
+        url.replace()
+        return null;
     }
 }

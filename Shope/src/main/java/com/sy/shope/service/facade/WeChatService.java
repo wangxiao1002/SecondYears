@@ -2,6 +2,7 @@ package com.sy.shope.service.facade;
 
 import com.sy.shope.support.JsonResult;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -42,4 +43,19 @@ public interface WeChatService {
      * @return String
      */
     JsonResult<String>  refund(String orderNo, BigDecimal amount, String refundReason) throws Exception;
+
+     /**
+      * 获取微信登录验证码
+      * @author wangxiao
+      * @return
+      * @throws UnsupportedEncodingException
+      **/
+    String weChatAuth() throws UnsupportedEncodingException;
+
+    /**
+     * 获取微信token
+     * @param code
+     * @return
+     */
+    String getAccessToken(String code);
 }
