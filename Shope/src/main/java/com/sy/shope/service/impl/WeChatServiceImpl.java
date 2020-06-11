@@ -1,26 +1,39 @@
 package com.sy.shope.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.sy.shope.config.WeChatConfig;
 import com.sy.shope.entity.Order;
+import com.sy.shope.entity.User;
 import com.sy.shope.service.facade.IOrderService;
 import com.sy.shope.service.facade.WeChatService;
 import com.sy.shope.support.JsonResult;
 import com.sy.shope.support.OrderEvent;
 import com.sy.shope.support.OrderingException;
+import com.sy.shope.tools.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * TODO
@@ -33,6 +46,8 @@ import java.util.Objects;
 public class WeChatServiceImpl implements WeChatService {
 
     final String success = "SUCCESS";
+
+    private RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();
 
     @Autowired
     private IOrderService orderService;
@@ -173,9 +188,70 @@ public class WeChatServiceImpl implements WeChatService {
     }
 
     @Override
-    public String getAccessToken(String code) {
+    public JsonNode getAccessToken(String code)   {
         String url = wxPayConfig.getAccessToken();
-        url.replace()
+        url = url.replace("APPID",wxPayConfig.getAppId())
+                .replace("SECRET",wxPayConfig.getSecret())
+                .replace("CODE",code);
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpGet request = new HttpGet(url);
+        request.setConfig(requestConfig);
+        JsonNode result = null;
+        try {
+            HttpResponse response = httpClient.execute(request);
+            if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
+                HttpEntity entity = response.getEntity();
+                result = JsonUtil.toJsonNode(entity);
+
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+            log.error("获取微信accessToken失败");
+        }
+        return result;
+    }
+
+    @Override
+    public String accessToken(String code) {
+        JsonNode jsonNode = getAccessToken(code);
+        return Optional.ofNullable(jsonNode).map(e->e.get("access_token").asText()).orElse(null);
+    }
+
+    @Override
+    public JsonNode getUserInfo(String accessToken, String openId) {
+        String url = wxPayConfig.getUserInfo();
+        url = url.replace("ACCESS_TOKEN",accessToken)
+                .replace("OPENID",openId);
+        HttpGet request = new HttpGet(url);
+        HttpClient httpClient = HttpClients.createDefault();
+        JsonNode result = null;
+        try {
+            request.setConfig(requestConfig);
+            HttpResponse response = httpClient.execute(request);
+            if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()) {
+                HttpEntity entity = response.getEntity();
+                result = JsonUtil.toJsonNode(entity);
+
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+            log.error("获取微信accessToken失败");
+        }
+        return result;
+    }
+
+    @Override
+    public User wxAuth(String code) {
+        JsonNode tokenJson = getAccessToken(code);
+        if (Objects.isNull(tokenJson)) {
+            throw new OrderingException("500","微信授权失败");
+        }
+        String accessToken = tokenJson.get("access_token").asText();
+        String openId = tokenJson.get("openid").asText();
+        JsonNode userInfo = getUserInfo(accessToken,openId);
+        /**
+         * 查询用户是否存在 不存在新建 存在登录
+         */
         return null;
     }
 }

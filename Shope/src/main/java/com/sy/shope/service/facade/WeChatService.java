@@ -1,7 +1,10 @@
 package com.sy.shope.service.facade;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.sy.shope.entity.User;
 import com.sy.shope.support.JsonResult;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -53,9 +56,31 @@ public interface WeChatService {
     String weChatAuth() throws UnsupportedEncodingException;
 
     /**
-     * 获取微信token
+     * 获取微信token和OpenID
      * @param code
      * @return
      */
-    String getAccessToken(String code);
+    JsonNode getAccessToken(String code);
+
+    /**
+     * 获取微信tokenString
+     * @param code
+     * @return
+     */
+    String accessToken(String code);
+
+    /**
+     * 获取用户信息
+     * @param accessToken
+     * @param openId
+     * @return
+     */
+    JsonNode getUserInfo(String accessToken,String openId);
+
+    /**
+     * 微信授权回调
+     * @param code
+     * @return
+     */
+    User wxAuth(String code);
 }

@@ -68,10 +68,17 @@ public class WeChatConfig extends WXPayConfig {
      */
     private String redirectUrl;
 
+    private String secret;
+
     /**
      * token
      */
     private String accessToken;
+
+    /**
+     * 用户信息
+     */
+    private String userInfo;
 
 
 
@@ -192,5 +199,21 @@ public class WeChatConfig extends WXPayConfig {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
     }
 }
