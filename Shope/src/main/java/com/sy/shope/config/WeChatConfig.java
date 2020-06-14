@@ -58,27 +58,9 @@ public class WeChatConfig extends WXPayConfig {
      */
     private String refundNotifyUrl;
 
-    /**
-     * 微信二维码
-     */
-    private String authUrl;
 
-    /**
-     * 微信授权回调地址
-     */
-    private String redirectUrl;
 
-    private String secret;
 
-    /**
-     * token
-     */
-    private String accessToken;
-
-    /**
-     * 用户信息
-     */
-    private String userInfo;
 
 
 
@@ -177,43 +159,5 @@ public class WeChatConfig extends WXPayConfig {
         return certPath;
     }
 
-    public String getAuthUrl() {
-        return authUrl;
-    }
 
-    public void setAuthUrl(String authUrl) {
-        this.authUrl = authUrl;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public String getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
-    }
 }

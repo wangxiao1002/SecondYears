@@ -1,7 +1,6 @@
 package com.sy.shope.service.impl;
 
 import com.sy.shope.entity.Good;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
