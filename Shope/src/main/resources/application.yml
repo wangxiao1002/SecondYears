@@ -7,9 +7,9 @@ spring:
     name: ShopeApplication
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://
+    url:
     username: root
-    password: root.
+    password: HEchuTIANya1.
     hikari:
       pool-name: ShopeDataSourcePool
       minimum-idle: 10
@@ -19,6 +19,11 @@ spring:
       idle-timeout: 30000
       connection-timeout: 60000
       connection-test-query: select 1
+  elasticsearch:
+    rest:
+      uris:
+      connection-timeout: 1
+      read-timeout: 30
 mybatis-plus:
   mapper-locations: lasspath:mappers/*.xml
   global-config:
@@ -39,10 +44,3 @@ pay:
     certPath: static/cert/wxpay/apiclient_cert.p12
     payNotifyUrl: http://xxx.com/wxPay/notify
     refundNotifyUrl: 'a'
-    authUrl: https://open.weixin.qq.com/connect/qrconnect
-    redirectUrl: ssss
-    accessToken: https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
-    userInfo: https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
-    secret: SECRET
-
-
