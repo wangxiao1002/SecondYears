@@ -34,9 +34,3 @@ eureka:
     metadata-map:
       management:
         context-path: ${server.servlet.context-path}/actuator
-oauth:
-  wx:
-    appID: wxe26ee13b12ed6c14
-    appsecret: 31da570505130817183cbddc6990b597
-    mchID: s
-    key: s
