@@ -13,40 +13,64 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "oauth.wx")
 public class WeiXinConfig {
 
-    private String appID;
-    private String mchID;
-    private String appsecret;
-    private String key;
+    private String appId;
 
-    public String getAppID() {
-        return appID;
+    private String appSecret;
+
+    private String qrCodeUrl;
+
+    private String accessTokenUrl;
+
+    private String userInfoUrl;
+
+    private String redirectUrl;
+
+
+    public String getAppId() {
+        return appId;
     }
 
-    public void setAppID(String appID) {
-        this.appID = appID;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
-    public String getMchID() {
-        return mchID;
+    public String getAppSecret() {
+        return appSecret;
     }
 
-    public void setMchID(String mchID) {
-        this.mchID = mchID;
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
     }
 
-    public String getAppsecret() {
-        return appsecret;
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
     }
 
-    public void setAppsecret(String appsecret) {
-        this.appsecret = appsecret;
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
     }
 
-    public String getKey() {
-        return key;
+    public String getAccessTokenUrl() {
+        return accessTokenUrl;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setAccessTokenUrl(String accessTokenUrl) {
+        this.accessTokenUrl = accessTokenUrl;
+    }
+
+    public String getUserInfoUrl() {
+        return userInfoUrl;
+    }
+
+    public void setUserInfoUrl(String userInfoUrl) {
+        this.userInfoUrl = userInfoUrl;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 }

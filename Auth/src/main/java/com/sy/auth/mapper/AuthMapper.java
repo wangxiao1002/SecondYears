@@ -70,4 +70,61 @@ public interface AuthMapper {
     List<AuthorityDO> selectAuthorityByUser(@Param("userCode") String userCode);
 
 
+    /**
+     * 查询微信用户
+     * @param openId
+     * @return
+     */
+    @ResultMap(value = "userResultMap" )
+    @Select("SELECT t.code,t.label,t.phone_number FROM t_auth_user t WHERE t.code = (SELECT w.user_code FROM t_auth_user_wechat w WHERE w.open_id = #{openId} )")
+    LoginDO selectUserByOpenId(@Param("openId") String openId);
+
+
+    /**
+     * insert
+     * @param loginDO
+     * @return
+     */
+    @Insert({"<script>",
+            "INSERT INTO t_auth_user (" +
+                    "<if test='param.code!=null'>"+
+                    "`code`," +
+                    "</if>" +
+                    "<if test='param.password!=null'>"+
+                    "`password`," +
+                    "</if>" +
+                    "<if test='param.phoneNumber!=null'>"+
+                    "phone_number," +
+                    "</if>" +
+                    "<if test='param.label!=null'>"+
+                    "label," +
+                    "</if>" +
+                    "create_date) VALUES (" +
+                    "<if test='param.code!=null'>"+
+                    "#{param.code}," +
+                    "</if>" +
+                    "<if test='param.password!=null'>"+
+                    "#{param.password}," +
+                    "</if>" +
+                    "<if test='param.phoneNumber!=null'>"+
+                    "#{param.phoneNumber}," +
+                    "</if>" +
+                    "<if test='param.label!=null'>"+
+                    "#{param.label}," +
+                    "</if>" +
+                    "now ()"+
+                    ")",
+            "</script>"})
+    int insertLoginDto(@Param("param") LoginDO loginDO);
+
+
+    /**
+     * 保存用户openId
+     * @param userCode
+     * @param openId
+     * @return
+     */
+    @Insert("INSERT INTO t_auth_user_wechat (user_code,open_id) VALUES (#{userCode},#{openId})")
+    int insertUserOpenId(String userCode,String openId);
+
 }
