@@ -1,22 +1,46 @@
 <template>
   <div id="app">
-    <router-view/>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'App'
-}
+  name: "app",
+  components: {
+
+  },
+  data() {
+    return {
+     
+    };
+  },
+  computed: {
+    
+  },
+  created() {
+    
+  },
+  methods: {
+    
+  },
+  watch: {
+   
+  }
+};
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Arial, "Microsoft Yahei";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  //text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 </style>

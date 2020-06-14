@@ -1,18 +1,26 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'babel-polyfill'
 import Vue from 'vue'
-import App from './App'
+import './plugins/iview'
+import './plugins/axios'
+import App from './App.vue'
 import router from './router'
-import ViewUI from 'view-design'
-import 'view-design/dist/styles/iview.css'
+import store from './store'
+import Es6Promise from 'es6-promise'
+import Element from 'element-ui'
+import draggable from 'vuedraggable'
+import "./assets/common.scss"
 
-Vue.use(ViewUI)
+require('es6-promise').polyfill()
+Es6Promise.polyfill()
 Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+Vue.use(Element)
+Vue.use(draggable)
+//路由切换，返回顶端
+router.afterEach((to, from, next) => {
+      window.scrollTo(0,0)
 })
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
