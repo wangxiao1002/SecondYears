@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: server-center
+  profiles:
+    active: server1
+logging:
+  file:
+    path: /logs
+    name: server-center.log
+

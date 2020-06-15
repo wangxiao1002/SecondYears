@@ -1,0 +1,34 @@
+server:
+  port: 38090
+eureka:
+  dashboard:
+    enabled: true
+    path: /server-center
+  instance:
+    hostname: server-center1
+    prefer-ip-address: true
+    instance-id: server-center39090
+  client:
+    # 注册自己
+    register-with-eureka: true
+    ##开启检索服务，单个的eureka不需要开启
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:38091/eureka/
+  server:
+    # 是否开启自我保护
+    enable-self-preservation: true
+    ##扫描失效服务时间间隔（单位毫秒，默认60*1000）60秒
+    eviction-interval-timer-in-ms: 30000
+    #设置eureka server同步失败的等待时间，默认5分钟，在这期间它不向客户端提供服务注册信息
+    wait-time-in-ms-when-sync-empty: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: env,shutdown
+  endpoint:
+    health:
+      show-details: ALWAYS
