@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -81,7 +83,7 @@ public class JsonUtil {
 
     }
 
-    public JsonNode parseJsonToJsonNode (String jsonStr) {
+    public static JsonNode parseJsonToJsonNode (String jsonStr) {
         try {
             return OBJECT_MAPPER.readTree(jsonStr);
         } catch (JsonProcessingException e) {
@@ -89,6 +91,16 @@ public class JsonUtil {
             return null;
         }
     }
+
+    public static ObjectNode createNode () {
+        return OBJECT_MAPPER.createObjectNode();
+    }
+
+    public static ArrayNode createArrayNode () {
+        return OBJECT_MAPPER.createArrayNode();
+    }
+
+
 
 
 }
