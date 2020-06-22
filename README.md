@@ -32,6 +32,8 @@
 4. sy-web doing
 5. Shope 商城 sku,spu 计算价格 done 微信支付done
 
-
+## 项目构建部署
+1. Cloud Toolkit
+2. docker
 
  
