@@ -1,6 +1,8 @@
 package com.sy.basis.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 集合工具类
@@ -8,6 +10,8 @@ import java.util.Collection;
  * @since 1.1
  */
 public final class CollectionUtil {
+    
+    public static final List<?> EMPTY_LIST = new ArrayList<>(0);
 
     private CollectionUtil () {}
 
