@@ -1,9 +1,15 @@
 package com.sy.notifyserver.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.sy.notifyserver.message.Message;
+import com.sy.notifyserver.service.MessageService;
+import com.sy.notifyserver.service.WebSocketService;
+import com.sy.notifyserver.support.JsonResult;
+import com.sy.notifyserver.util.JsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 消息处理
@@ -15,8 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/message")
 public class MessageController {
 
-    @GetMapping("/push/{userId}")
-    public void pushTest (@PathVariable String userId) {
 
+
+
+    @Autowired
+    private MessageService messageService;
+
+
+    @PostMapping("/push")
+    public ResponseEntity<JsonResult> pushMessage (@RequestBody Message message) {
+        Map<String,Object> result = messageService.pushMessage(message);
+        return ResponseEntity.ok(JsonResult.build(200).value(result));
     }
+
 }
