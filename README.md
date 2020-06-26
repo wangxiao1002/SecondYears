@@ -30,7 +30,7 @@
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
 3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 done
 4. sy-web doing -> cancle (服务器到期)
-5. Shope 商城 sku,spu 计算价格 done 微信支付done
+5. Shope 商城 sku,spu 计算价格 done 微信支付done es搜索 done 使用百度查询快递(百度不支持顺丰 正在研究so.com) done
 ## 直播（实现重点）
 1. 之前认为的直播是 后端推送二进制流，类似webSocket推送，结合netty 自定义协议，前端再去解析协议(错误的认知)
 2. obs:[obs推流](https://github.com/obsproject/obs-studio) 
