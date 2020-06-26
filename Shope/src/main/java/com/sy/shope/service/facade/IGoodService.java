@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sy.shope.entity.Good;
 
+import java.util.List;
+
 /**
  * 
  * @author wangxiao
@@ -23,4 +25,12 @@ public interface IGoodService extends IService<Good> {
      * @return Good
      */
     Good queryGoodDetails(String goodId);
+
+
+    /**
+     * 查询用户喜欢，推荐
+     * @param userId
+     * @return
+     */
+    List<Good> queryUserLikeGood(String userId);
 }

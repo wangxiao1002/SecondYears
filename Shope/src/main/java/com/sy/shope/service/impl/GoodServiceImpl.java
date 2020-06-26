@@ -11,6 +11,7 @@ import com.sy.shope.support.OrderingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,5 +42,10 @@ public class GoodServiceImpl extends ServiceImpl<GoodMapper, Good>  implements I
             return e;
         }).orElseThrow(() ->new OrderingException("200","查询商品不存在!!"));
         return good;
+    }
+
+    @Override
+    public List<Good> queryUserLikeGood(String userId) {
+        return null;
     }
 }

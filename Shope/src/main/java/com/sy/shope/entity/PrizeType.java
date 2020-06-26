@@ -8,7 +8,7 @@ package com.sy.shope.entity;
 public enum PrizeType {
 
     /**
-     * 特定将
+     * 特定奖
      */
     GRAND(0,"grand"),
     /**
