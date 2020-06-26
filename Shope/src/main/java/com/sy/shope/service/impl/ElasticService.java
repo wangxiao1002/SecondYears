@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -78,5 +80,10 @@ public class ElasticService {
                     return good.getContent();
                 }).collect(Collectors.toList());
         return goodList;
+    }
+
+
+    public void  addGood (Good good) {
+        elasticsearchRestTemplate.save(good);
     }
 }
