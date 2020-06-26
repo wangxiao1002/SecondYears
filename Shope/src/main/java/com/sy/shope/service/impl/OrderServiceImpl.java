@@ -13,6 +13,7 @@ import com.sy.shope.service.facade.IPriceService;
 import com.sy.shope.service.facade.ISkuService;
 import com.sy.shope.support.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -38,6 +39,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private IPriceService priceService;
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     private OrderExpireHandler expireHandler;
 
@@ -81,7 +85,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             orderInfoService.save(orderInfo);
         }
         OrderExpireDTO<String> orderExpireDTO = new OrderExpireDTO<String>(20L, TimeUnit.SECONDS,order.getId());
+        // 设置过期时间和通知消息
         expireHandler.addOrderExpire(orderExpireDTO);
+        publisher.publishEvent(new OrderEvent(order.getId()));
         return order;
     }
 
