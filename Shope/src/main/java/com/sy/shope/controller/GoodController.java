@@ -4,16 +4,16 @@ package com.sy.shope.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sy.shope.entity.Good;
 import com.sy.shope.service.facade.IGoodService;
+import com.sy.shope.service.impl.ElasticService;
 import com.sy.shope.support.JsonResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -28,8 +28,9 @@ public class GoodController {
     @Autowired
     private IGoodService goodService;
 
+
     @Autowired
-    private ApplicationEventPublisher publisher;
+    private ElasticService elasticService;
 
 
 
@@ -42,6 +43,13 @@ public class GoodController {
     public ResponseEntity<JsonResult<Good>> getGoodDetails(@PathVariable String spuId) {
         Assert.notNull(spuId,"spu id is must`t null ");
         return ResponseEntity.ok(JsonResult.success(goodService.queryGoodDetails(spuId)));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<JsonResult<List<Good>>> searchGood (@RequestParam String keyWord,
+                                                              @RequestParam String type,
+                                                              @RequestParam int page) {
+        return ResponseEntity.ok(JsonResult.success(elasticService.queryAndHeight(keyWord,type,page,10)));
     }
 
 }
