@@ -76,7 +76,7 @@ public class JsonUtil {
 
     }
 
-    public JsonNode parseJsonToJsonNode (String jsonStr) {
+    public static JsonNode parseJsonToJsonNode(String jsonStr) {
         try {
             return OBJECT_MAPPER.readTree(jsonStr);
         } catch (JsonProcessingException e) {
