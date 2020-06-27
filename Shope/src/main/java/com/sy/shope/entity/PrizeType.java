@@ -1,11 +1,13 @@
 package com.sy.shope.entity;
 
+import com.baomidou.mybatisplus.core.enums.IEnum;
+
 /**
  * 奖品类型
  * @author wangxiao
  * @since 1.1
  */
-public enum PrizeType {
+public enum PrizeType implements IEnum<Integer> {
 
     /**
      * 特定奖
@@ -42,5 +44,17 @@ public enum PrizeType {
     PrizeType(int code, String value) {
         this.code = code;
         this.value = value;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public Integer getValue() {
+        return code;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 商城首页
  * @author wangxiao
@@ -26,11 +28,21 @@ public class IndexController {
     @Autowired
     private IndexService indexService;
 
+
+
     @GetMapping
-    public ResponseEntity<JsonResult> indexPage (@RequestHeader String token) {
+    public ResponseEntity<JsonResult<Map<String,Object>>> indexPage (@RequestHeader String token) {
         String userId = jwtUtil.getTokenUserId(token);
-        log.info("user: {} is query index page",userId);
+        log.info("user: {} has query index page",userId);
         return ResponseEntity.ok(indexService.queryIndexPage(userId));
+    }
+
+    @GetMapping
+    public ResponseEntity<JsonResult<Map<String,Object>>> lottery (@RequestHeader String token,
+                                                                   @RequestParam String lotteryId) {
+        String userId = jwtUtil.getTokenUserId(token);
+        log.info("user id : {} has lottery",userId);
+
     }
 
 
