@@ -121,7 +121,7 @@ public class IndexServiceImpl implements IndexService {
         /**
          * 缓存移除事件 保存数据库 暂时直接保存
          */
-
+        updatePrizeDomain(prizeDomainIdStr,prizeDomainList);
         return result;
     }
 
@@ -149,15 +149,19 @@ public class IndexServiceImpl implements IndexService {
         SystemCacheUtil<List<PrizeDomain>> prizeDomainSystemCache = SystemCacheUtil.build();
         List<PrizeDomain> prizeDomains = prizeDomainSystemCache.getCache(idsStr);
         if (Objects.isNull(prizeDomains)) {
-            prizeDomains =prizeDomainService.listByIds(ids);
+            prizeDomains = prizeDomainService.listByIds(ids);
         }
         return prizeDomains;
     }
 
 
-    private int updatePrizeDomain (String idsStr,List<PrizeDomain> prizeDomains) {
+    private void updatePrizeDomain (String idsStr,List<PrizeDomain> prizeDomains) {
+        SystemCacheUtil<List<PrizeDomain>> prizeDomainSystemCache = SystemCacheUtil.build();
         if (Objects.nonNull(idsStr)) {
-
+            prizeDomainSystemCache.addCache(idsStr,prizeDomains);
+        }
+        if (Objects.nonNull(prizeDomains) && !prizeDomains.isEmpty()) {
+            prizeDomainService.updateBatchById(prizeDomains);
         }
     }
 

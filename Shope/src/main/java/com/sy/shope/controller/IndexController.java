@@ -1,5 +1,6 @@
 package com.sy.shope.controller;
 
+import com.sy.shope.entity.PrizeDomain;
 import com.sy.shope.service.facade.IndexService;
 import com.sy.shope.support.JsonResult;
 import com.sy.shope.tools.JwtUtil;
@@ -38,13 +39,13 @@ public class IndexController {
     }
 
     @GetMapping
-    public ResponseEntity<JsonResult<Map<String,Object>>> lottery (@RequestHeader String token,
-                                                                   @RequestParam String lotteryId) {
+    public ResponseEntity<JsonResult<PrizeDomain>> lottery (@RequestHeader String token,
+                                                            @RequestParam String lotteryId) {
         String userId = jwtUtil.getTokenUserId(token);
         log.info("user id : {} has lottery",userId);
-        Map<String,Object> resultMap = indexService.lottery(userId,lotteryId);
-        log.warn("user : {} lottery activity :{} result is {}",userId,lotteryId,resultMap.toString());
-        return ResponseEntity.ok(JsonResult.success(resultMap));
+        PrizeDomain result = indexService.lottery(userId,lotteryId);
+        log.warn("user : {} lottery activity :{} result is {}",userId,lotteryId,result.toString());
+        return ResponseEntity.ok(JsonResult.success(result));
     }
 
 
