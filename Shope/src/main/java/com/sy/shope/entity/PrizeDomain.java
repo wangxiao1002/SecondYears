@@ -31,4 +31,12 @@ public class PrizeDomain {
      */
     private int count;
 
+    public static PrizeDomain lucky (String code) {
+        PrizeDomain luckyPrizeDomain = new PrizeDomain();
+        luckyPrizeDomain.setCode(code);
+        luckyPrizeDomain.setLabel("非常感谢你的参与，下次会有更好运气");
+        luckyPrizeDomain.setType(PrizeType.LUCKY);
+        return luckyPrizeDomain;
+    }
+
 }

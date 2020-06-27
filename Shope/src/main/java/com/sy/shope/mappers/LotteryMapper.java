@@ -1,10 +1,12 @@
 package com.sy.shope.mappers;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sy.shope.entity.Lottery;
+
 /**
- * TODO
- *
+ * LotteryMapper
  * @author wangxiao
- * @since
+ * @since 1.1
  */
-public interface LotteryMapper {
+public interface LotteryMapper extends BaseMapper<Lottery> {
 }

@@ -1,9 +1,9 @@
-package com.sy.shope.service.facade;
+package com.sy.shope.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sy.shope.entity.Category;
 import com.sy.shope.mappers.CateGoryMapper;
-import com.sy.shope.service.impl.ICategoryService;
+import com.sy.shope.service.facade.ICategoryService;
 import org.springframework.stereotype.Service;
 
 /**
