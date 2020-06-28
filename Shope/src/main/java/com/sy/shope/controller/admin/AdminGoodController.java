@@ -7,10 +7,9 @@ import com.sy.shope.service.facade.IGoodService;
 import com.sy.shope.support.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 商品管理
@@ -26,6 +25,31 @@ public class AdminGoodController {
 
     @GetMapping("/{page}")
     public ResponseEntity<JsonResult<IPage<Good>>> getPageGood (@PathVariable long page) {
-        IPage<Good> goodIPage = goodService.page(new Page<Good>(page));
+        IPage<Good> goodPage = goodService.page(new Page<Good>(page,10L));
+        return ResponseEntity.ok(JsonResult.success(goodPage));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<JsonResult<Good>> getGood (@PathVariable String id) {
+        Good good = goodService.queryGoodDetails(id);
+        return ResponseEntity.ok(JsonResult.success(good));
+    }
+
+    @PostMapping
+    public ResponseEntity<JsonResult<Boolean>> addGood (@RequestBody @Valid Good param) {
+        boolean result = goodService.save(param);
+        return ResponseEntity.ok(JsonResult.success(result));
+    }
+
+    @PutMapping
+    public ResponseEntity<JsonResult<Boolean>> updateGood (@RequestBody @Valid Good param) {
+        boolean result = goodService.updateById(param);
+        return ResponseEntity.ok(JsonResult.success(result));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<JsonResult<Boolean>> delGood (@PathVariable String id) {
+        boolean result = goodService.removeById(id);
+        return ResponseEntity.ok(JsonResult.success(result));
     }
 }

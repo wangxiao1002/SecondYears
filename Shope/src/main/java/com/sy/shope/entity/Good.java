@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class Good {
     @Field(type = FieldType.Text,analyzer = "ik_max_word" ,searchAnalyzer="ik_max_word" )
     private String spuNameEn;
 
+    @NotNull(message = "价格不能为空")
     @Field(type = FieldType.Double,analyzer = "ik_max_word" ,searchAnalyzer="ik_max_word" )
     private BigDecimal price;
 
