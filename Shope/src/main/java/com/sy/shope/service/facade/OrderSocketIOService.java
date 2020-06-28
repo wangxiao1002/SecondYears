@@ -5,7 +5,7 @@ package com.sy.shope.service.facade;
  * @author wangxiao
  * @since 1.1
  */
-public interface SocketIOService {
+public interface OrderSocketIOService {
 
     /**
      * 启动
