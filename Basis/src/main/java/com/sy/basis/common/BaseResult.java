@@ -5,7 +5,7 @@ package com.sy.basis.common;
  * @author wangxiao
  * @since 1.1
  */
-public class BaseResult<T> {
+public final class BaseResult<T> {
 
     private String status;
 
@@ -57,6 +57,29 @@ public class BaseResult<T> {
     public BaseResult<T> result(T result) {
         this.result = result;
         return this;
+    }
+
+    private static <T> BaseResult<T> build () {
+        return new BaseResult<T>();
+    }
+
+    public static <T>BaseResult<T> fail (String message) {
+        BaseResult<T> jsonResult = build();
+        return jsonResult.status("200").message(message);
+    }
+    public static <T>BaseResult<T> fail (String code,String message) {
+        BaseResult<T> jsonResult = build();
+        return jsonResult.status(code).message(message);
+    }
+
+    public static <T>BaseResult<T> success (T data) {
+        BaseResult<T> jsonResult = build();
+        return jsonResult.status("200").result(data);
+
+    }
+    public static <T>BaseResult<T> success (String message,T data) {
+        BaseResult<T> jsonResult = build();
+        return jsonResult.status("200").message(message).result(data);
     }
 
 
