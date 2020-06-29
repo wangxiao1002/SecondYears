@@ -11,6 +11,7 @@ import com.sy.shope.support.JsonResult;
 import com.sy.shope.support.OrderEvent;
 import com.sy.shope.support.OrderingException;
 
+import com.sy.shope.tools.Constants;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.http.client.config.RequestConfig;
@@ -45,8 +46,7 @@ public class WeChatServiceImpl implements WeChatService {
     @Autowired
     private WeChatConfig wxPayConfig;
 
-    @Autowired
-    private ApplicationEventPublisher publisher;
+
 
     @Override
     public JsonResult<Map<String,String>> unifiedOrder(String orderNo, BigDecimal amount, String body) {
@@ -58,7 +58,7 @@ public class WeChatServiceImpl implements WeChatService {
             WXPay wxpay = new WXPay(wxPayConfig);
             requestMap.put("body", body);
             requestMap.put("out_trade_no", orderNo);
-            requestMap.put("total_fee", amount.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN)).setScale(0,4).toString());
+            requestMap.put("total_fee", amount.multiply(Constants.HUNDRED).setScale(0,4).toString());
             requestMap.put("trade_type", "Native");
             requestMap.put("notify_url", wxPayConfig.getPayNotifyUrl());
             Map<String, String> resultMap = wxpay.unifiedOrder(requestMap);
@@ -94,7 +94,7 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public String notify(String notifyStr) throws Exception {
-        String xmlBack = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
+        String xmlBack = Constants.FAIL_XML;
         try {
             Map<String, String> resultMap = WXPayUtil.xmlToMap(notifyStr);
             WXPay wxPay = new WXPay(wxPayConfig);
@@ -102,13 +102,10 @@ public class WeChatServiceImpl implements WeChatService {
                 String returnCode = resultMap.get("return_code");
                 String outTradeNo = resultMap.get("out_trade_no");
                 String transactionId = resultMap.get("transaction_id");
-                if (success.equals(returnCode)) {
-                    if (! StringUtils.isEmpty(outTradeNo)) {
-                        orderService.successOrder(outTradeNo);
-                        publisher.publishEvent(new OrderEvent(outTradeNo));
+                if (success.equals(returnCode) && !StringUtils.isEmpty(outTradeNo)) {
+                        orderService.successOrder(outTradeNo,transactionId);
                         log.info("微信手机支付回调成功,订单号:{}", outTradeNo);
-                        xmlBack = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
-                    }
+                        xmlBack =  Constants.SUCCESS_XML;
                 }
             }
         } catch (Exception e) {
@@ -132,10 +129,10 @@ public class WeChatServiceImpl implements WeChatService {
         Map<String, String> responseMap = new HashMap<>(8);
         Map<String, String> requestMap = new HashMap<>(8);
         WXPay wxpay = new WXPay(wxPayConfig);
-        requestMap.put("out_trade_no", orderNo);
+        requestMap.put("transaction_id", order.getDescNo());
         requestMap.put("out_refund_no", orderNo);
         requestMap.put("total_fee", "订单总金额");
-        requestMap.put("refund_fee", amount.multiply(BigDecimal.TEN.multiply(BigDecimal.TEN)).setScale(0,4).toString());
+        requestMap.put("refund_fee", amount.multiply(Constants.HUNDRED).setScale(0,4).toString());
 
         requestMap.put("refund_desc", refundReason);
         try {

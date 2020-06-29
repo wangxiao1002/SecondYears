@@ -36,13 +36,8 @@ public class Order {
 
     private LocalDateTime updateTime;
 
-    private int descNo;
+    private String descNo;
 
-    private String paper;
-
-    private String milk;
-
-    private String sugar;
 
     private String remark;
 

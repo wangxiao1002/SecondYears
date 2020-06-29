@@ -46,6 +46,14 @@ public interface IOrderService extends IService<Order> {
 
 
     /**
+     * 微信订单确认
+     * @param orderId
+     * @param desNo
+     */
+     void successOrder(String orderId,String desNo);
+
+
+    /**
      *  退款
      * @param orderId
      * @return

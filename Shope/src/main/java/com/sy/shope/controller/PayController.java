@@ -1,6 +1,7 @@
 package com.sy.shope.controller;
 
 import com.sy.shope.service.facade.WeChatService;
+import com.sy.shope.tools.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +31,14 @@ public class PayController {
     @RequestMapping(value = "/wx/notify")
     public String payNotify(HttpServletRequest request) {
         InputStream is = null;
-        String xmlBack = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
+        String xmlBack = Constants.FAIL_XML;
         try {
             is = request.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             xmlBack = weChatService.notify(sb.toString());
         } catch (Exception e) {

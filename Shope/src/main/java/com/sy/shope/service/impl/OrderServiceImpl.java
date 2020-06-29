@@ -45,6 +45,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     private OrderExpireHandler expireHandler;
 
+
     @Autowired
     public void setExpireHandler(OrderExpireHandler expireHandler) {
         this.expireHandler = expireHandler;
@@ -110,6 +111,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             return updateById(order);})
                 .orElse(false);
         return a;
+    }
+
+    @Override
+    public void successOrder(String orderId, String desNo) {
+        Order order = getById(orderId);
+        boolean a = Optional.ofNullable(order).map(e ->{
+            e.setState(OrderState.DONE);
+            e.setDescNo(desNo);
+            return updateById(order);})
+                .orElse(false);
+      if (a) {
+          publisher.publishEvent(new OrderEvent(orderId));
+      }
     }
 
     @Override
