@@ -131,7 +131,7 @@ public class WeChatServiceImpl implements WeChatService {
         WXPay wxpay = new WXPay(wxPayConfig);
         requestMap.put("transaction_id", order.getDescNo());
         requestMap.put("out_refund_no", orderNo);
-        requestMap.put("total_fee", "订单总金额");
+        requestMap.put("total_fee", order.getPrice().multiply(Constants.HUNDRED).setScale(0,4).toString());
         requestMap.put("refund_fee", amount.multiply(Constants.HUNDRED).setScale(0,4).toString());
 
         requestMap.put("refund_desc", refundReason);
