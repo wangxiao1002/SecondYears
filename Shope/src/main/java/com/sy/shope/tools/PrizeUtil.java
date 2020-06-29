@@ -14,8 +14,12 @@ import java.util.List;
 public class PrizeUtil {
 
 
+    /**
+     * 抽中其中一个的id
+     * @param prizeDomains
+     * @return
+     */
     public static String calcPrizeCode(List<PrizeDomain> prizeDomains) {
-        DecimalFormat format = new DecimalFormat("#####00.00");
 
         String code ="";
         double sumWeight = 0;
