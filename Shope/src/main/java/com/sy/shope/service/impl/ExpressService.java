@@ -5,6 +5,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.sy.shope.tools.ExpressUtil;
 import com.sy.shope.tools.JsonUtil;
+import com.sy.shope.tools.SystemCacheUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -27,12 +28,18 @@ public class ExpressService {
     final String TOKEN_KEY = "express_token";
 
     public JsonNode getExpressByNu (String number) {
+
+
+        SystemCacheUtil<String> systemCacheUtil = SystemCacheUtil.build();
+        String json = systemCacheUtil.getCache(number);
         String token = TOKEN_CACHE.getIfPresent(TOKEN_KEY);
         if (Objects.isNull(token)) {
             token = ExpressUtil.getBaiduExpressToken();
             TOKEN_CACHE.put(TOKEN_KEY,token);
         }
-        String result = ExpressUtil.searchExpressByNu(token,number);
-        return JsonUtil.parseJsonToJsonNode(result);
+        if (Objects.isNull(json)) {
+            json = ExpressUtil.searchExpressByNu(token,number);
+        }
+        return JsonUtil.parseJsonToJsonNode(json);
     }
 }
