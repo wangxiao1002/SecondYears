@@ -28,8 +28,6 @@ public class ExpressService {
     final String TOKEN_KEY = "express_token";
 
     public JsonNode getExpressByNu (String number) {
-
-
         SystemCacheUtil<String> systemCacheUtil = SystemCacheUtil.build();
         String json = systemCacheUtil.getCache(number);
         String token = TOKEN_CACHE.getIfPresent(TOKEN_KEY);
