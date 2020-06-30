@@ -18,6 +18,8 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Resource
     private WebSocketRoomMapper socketRoomMapper;
+
+
     @Override
     public List<WebSocketRoom> querySocketRoomByCoordinate(double minX, double maxX, double minY, double maxY) {
         return socketRoomMapper.selectSocketRoomByCoordinate(minX, maxX, minY, maxY);

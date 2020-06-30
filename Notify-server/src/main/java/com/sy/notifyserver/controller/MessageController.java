@@ -1,10 +1,8 @@
 package com.sy.notifyserver.controller;
 
+import com.sy.basis.common.BaseResult;
 import com.sy.notifyserver.message.Message;
 import com.sy.notifyserver.service.MessageService;
-import com.sy.notifyserver.service.WebSocketService;
-import com.sy.notifyserver.support.JsonResult;
-import com.sy.notifyserver.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +27,9 @@ public class MessageController {
 
 
     @PostMapping("/push")
-    public ResponseEntity<JsonResult> pushMessage (@RequestBody Message message) {
+    public ResponseEntity<BaseResult<Map<String,Object>>> pushMessage (@RequestBody Message message) {
         Map<String,Object> result = messageService.pushMessage(message);
-        return ResponseEntity.ok(JsonResult.build(200).value(result));
+        return ResponseEntity.ok(BaseResult.success(result));
     }
 
 }

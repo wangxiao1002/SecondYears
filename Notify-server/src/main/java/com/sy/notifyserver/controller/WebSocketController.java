@@ -1,19 +1,16 @@
 package com.sy.notifyserver.controller;
 
 import com.spatial4j.core.shape.Rectangle;
-import com.sy.notifyserver.config.WebSocketConfig;
+import com.sy.basis.common.BaseResult;
 import com.sy.notifyserver.domain.WebSocketRoom;
 import com.sy.notifyserver.service.WebSocketService;
-import com.sy.notifyserver.support.JsonResult;
+
 import com.sy.notifyserver.util.RectangleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.sy.notifyserver.util.RectangleUtil.getRectangle;
 
 /**
  * 直播
@@ -28,19 +25,19 @@ public class WebSocketController {
     private WebSocketService socketService;
 
     @GetMapping("/{page}")
-    public ResponseEntity<JsonResult> querySocketRoomByPage (@PathVariable int page) {
+    public ResponseEntity<BaseResult<WebSocketRoom>> querySocketRoomByPage (@PathVariable int page) {
         return null;
     }
 
 
     @GetMapping("/{type}/{page}")
-    public ResponseEntity<JsonResult> querySocketRoomByPageAndType (@PathVariable String type,
+    public ResponseEntity<BaseResult<WebSocketRoom>> querySocketRoomByPageAndType (@PathVariable String type,
                                                                     @PathVariable int  page) {
         return null;
     }
 
     @GetMapping("nearby")
-    public ResponseEntity<JsonResult> queryNearbySocketRoom(@RequestParam("distance") double distance,
+    public ResponseEntity<BaseResult<List<WebSocketRoom>>> queryNearbySocketRoom(@RequestParam("distance") double distance,
                                                             @RequestParam("userLng") double userLng,
                                                             @RequestParam("userLat") double userLat) {
 
@@ -50,7 +47,7 @@ public class WebSocketController {
         roomList = roomList.stream()
                 .filter(a -> RectangleUtil.getDistance(a.getRoomLng(), a.getRoomLat(), userLng, userLat) <= distance)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(JsonResult.build(200).value(roomList));
+        return ResponseEntity.ok(BaseResult.success(roomList));
     }
 
 
