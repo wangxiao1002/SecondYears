@@ -32,7 +32,7 @@ public class LocalLockInterceptor {
         Object result = joinPoint.proceed();
         if (method.isAnnotationPresent(LocalLock.class)) {
             LocalLock localLock = method.getAnnotation(LocalLock.class);
-            String key = genenreateKey(localLock.key(),method.getName());
+            String key = generateKey(localLock.key(),method.getName());
             if (CACHES.getIfPresent(key) != null) {
                 throw new RuntimeException("短时间内不能重复提交");
             }
@@ -51,7 +51,7 @@ public class LocalLockInterceptor {
 
     }
 
-    private String genenreateKey (String key,String method) {
+    private String generateKey (String key,String method) {
        return null == key && "".equals(key.trim()) ? method: key;
     }
 
