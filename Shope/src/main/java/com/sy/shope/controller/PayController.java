@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
  * @since
  */
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/pay")
 public class PayController {
 
@@ -29,7 +29,8 @@ public class PayController {
     private WeChatService weChatService;
 
     @RequestMapping(value = "/wx/notify")
-    public String payNotify(HttpServletRequest request) {
+    public String payNotify(HttpServletRequest request,HttpServletResponse response) {
+        response.setContentType(ContentType.TEXT_XML.getMimeType());
         InputStream is = null;
         String xmlBack = Constants.FAIL_XML;
         try {
@@ -38,19 +39,20 @@ public class PayController {
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
+                sb.append(line);
             }
+             is.close();
             xmlBack = weChatService.notify(sb.toString());
         } catch (Exception e) {
             log.error("微信手机支付回调通知失败：", e);
         } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+      
+            try {
+               response.getWriter().println(xmlBack);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            
         }
         return xmlBack;
     }
