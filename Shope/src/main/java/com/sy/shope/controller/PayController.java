@@ -3,7 +3,10 @@ package com.sy.shope.controller;
 import com.sy.shope.service.facade.WeChatService;
 import com.sy.shope.tools.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +23,7 @@ import java.io.InputStreamReader;
  * @since
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/pay")
 public class PayController {
 
@@ -28,11 +31,10 @@ public class PayController {
     @Autowired
     private WeChatService weChatService;
 
-    @RequestMapping(value = "/wx/notify")
-    public String payNotify(HttpServletRequest request,HttpServletResponse response) {
-        response.setContentType(ContentType.TEXT_XML.getMimeType());
-        InputStream is = null;
-        String xmlBack = Constants.FAIL_XML;
+    @PostMapping(value = "/wx/notify",produces = MediaType.APPLICATION_XML_VALUE)
+    public String payNotify(HttpServletRequest request) {
+        InputStream is;
+        String xmlBack ;
         try {
             is = request.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -41,19 +43,14 @@ public class PayController {
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-             is.close();
+            is.close();
             xmlBack = weChatService.notify(sb.toString());
+            return xmlBack;
         } catch (Exception e) {
+            xmlBack = Constants.FAIL_XML;
             log.error("微信手机支付回调通知失败：", e);
-        } finally {
-      
-            try {
-               response.getWriter().println(xmlBack);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
+            return xmlBack;
         }
-        return xmlBack;
+
     }
 }

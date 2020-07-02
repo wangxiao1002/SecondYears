@@ -31,14 +31,14 @@ public class IndexController {
 
 
 
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<JsonResult<Map<String,Object>>> indexPage (@RequestHeader String token) {
         String userId = jwtUtil.getTokenUserId(token);
         log.info("user: {} has query index page",userId);
         return ResponseEntity.ok(indexService.queryIndexPage(userId));
     }
 
-    @GetMapping
+    @GetMapping("/lottery")
     public ResponseEntity<JsonResult<PrizeDomain>> lottery (@RequestHeader String token,
                                                             @RequestParam String lotteryId) {
         String userId = jwtUtil.getTokenUserId(token);

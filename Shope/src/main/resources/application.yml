@@ -7,7 +7,7 @@ spring:
     name: ShopeApplication
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url:
+    url: jdbc:mysql://123.57.243.207:3306/sy
     username: root
     password: HEchuTIANya1.
     hikari:
@@ -21,7 +21,7 @@ spring:
       connection-test-query: select 1
   elasticsearch:
     rest:
-      uris:
+      uris: 127.0.0.1:9200
       connection-timeout: 1
       read-timeout: 30
 mybatis-plus:
@@ -44,3 +44,21 @@ pay:
     certPath: static/cert/wxpay/apiclient_cert.p12
     payNotifyUrl: http://xxx.com/wxPay/notify
     refundNotifyUrl: 'a'
+socketio:
+  # host: 192.168.1.178
+  host: 127.0.0.1
+  port: 38082
+  # 设置最大每帧处理数据的长度，防止他人利用大数据来攻击服务器
+  maxFramePayloadLength: 1048576
+  # 设置http交互最大内容长度
+  maxHttpContentLength: 1048576
+  # socket连接数大小（如只监听一个端口boss线程组为1即可）
+  bossCount: 1
+  workCount: 100
+  allowCustomRequests: true
+  # 协议升级超时时间（毫秒），默认10秒。HTTP握手升级为ws协议超时时间
+  upgradeTimeout: 1000000
+  # Ping消息超时时间（毫秒），默认60秒，这个时间间隔内没有接收到心跳消息就会发送超时事件
+  pingTimeout: 6000000
+  # Ping消息间隔（毫秒），默认25秒。客户端向服务器发送一条心跳消息间隔
+  pingInterval: 25000
