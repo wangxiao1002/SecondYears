@@ -178,3 +178,4 @@ public class MessageListener {
 3. 数据同步 旧数据使用logstash 同步 新数据直接使用save 保存
 4. index 想当与Mysql 数据库 type 表 feild row
 5. 使用注解 需要调用 elasticsearchRestTemplate.indexOps(Good.class).create() (不严谨)
+## 秒杀
