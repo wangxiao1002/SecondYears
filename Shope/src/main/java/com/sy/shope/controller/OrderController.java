@@ -15,9 +15,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * @author: wang xiao
- * @description: orderController
- * @date: Created in 20:32 2020/6/3
+ * @author wang xiao
+ * 订单 orderController
+ * @date Created in 20:32 2020/6/3
  */
 
 @RestController

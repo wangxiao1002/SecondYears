@@ -3,7 +3,7 @@ package com.sy.shope.mappers;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sy.shope.entity.Spec;
-import com.sy.shope.entity.SpecGroupVO;
+import com.sy.shope.entity.SpecGroup;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
@@ -28,7 +28,7 @@ public interface SpecMapper extends BaseMapper<Spec> {
             @Result(column="id",property="specList",many=@Many(select="com.sy.shope.mappers.SpecMapper.selectSpecByGroupId",fetchType= FetchType.EAGER))
     })
     @Select("SELECT sg.id,sg.`name` FROM t_shope_spec_group sg  WHERE sg.spu_id = #{goodId}")
-    List<SpecGroupVO> selectSpecGroupByGoodId(String goodId);
+    List<SpecGroup> selectSpecGroupByGoodId(String goodId);
 
 
     /**

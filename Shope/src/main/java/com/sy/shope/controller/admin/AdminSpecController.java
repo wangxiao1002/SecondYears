@@ -6,14 +6,12 @@ import com.sy.shope.service.facade.ISpecTemplateService;
 import com.sy.shope.support.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * 规格 后台
+ * 规格模板 后台
  * @author wangxiao
  * @since 1.1
  */
@@ -30,6 +28,17 @@ public class AdminSpecController {
         return ResponseEntity.ok(JsonResult.success(specTemplateService.list()));
     }
 
+
+    @PutMapping("/template")
+    public ResponseEntity<JsonResult<Boolean>> updateSpecTemplates (@RequestBody SpecTemplate specTemplate) {
+        return ResponseEntity.ok(JsonResult.success(specTemplateService.updateById(specTemplate)));
+    }
+
+
+    @DeleteMapping("/template/{id}")
+    public ResponseEntity<JsonResult<Boolean>> delSpecTemplates (@PathVariable String id) {
+        return ResponseEntity.ok(JsonResult.success(specTemplateService.removeById(id)));
+    }
 
 
 

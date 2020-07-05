@@ -58,6 +58,6 @@ public class Good {
 
     private String updateTime;
     @TableField(exist = false)
-    private List<SpecGroupVO> specGroupVOS;
+    private List<SpecGroup> specGroups;
 
 }

@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
  * TODO
- *
+ * 微信支付结果通知
  * @author wangxiao
- * @since
+ * @since 1.1
  */
 @Slf4j
 @RestController

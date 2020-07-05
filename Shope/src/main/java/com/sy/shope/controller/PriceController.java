@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author: wang xiao
- * @description: 价格
- * @date: Created in 18:49 2020/6/3
+ * @author wang xiao
+ *  价格 计算
+ * @date Created in 18:49 2020/6/3
  */
 @RestController
 @RequestMapping("/price")

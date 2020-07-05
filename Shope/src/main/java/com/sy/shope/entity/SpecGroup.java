@@ -16,12 +16,15 @@ import java.util.List;
  */
 @Data
 @TableName("t_shope_spec_group")
-public class SpecGroupVO {
+public class SpecGroup {
 
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     private String name;
+
+    @TableField(value = "spu_id")
+    private String goodId;
 
     @TableField(exist = false)
     private List<Spec> specList;

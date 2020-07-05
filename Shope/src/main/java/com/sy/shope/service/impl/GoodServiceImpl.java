@@ -38,7 +38,7 @@ public class GoodServiceImpl extends ServiceImpl<GoodMapper, Good>  implements I
     public Good queryGoodDetails(String goodId) {
         Good good = baseMapper.selectById(goodId);
         Optional.ofNullable(good).map(e->{
-            e.setSpecGroupVOS(specService.querySpecGroupByGoodId(e.getId()));
+            e.setSpecGroups(specService.querySpecGroupByGoodId(e.getId()));
             return e;
         }).orElseThrow(() ->new OrderingException("200","查询商品不存在!!"));
         return good;

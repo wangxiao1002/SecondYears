@@ -13,5 +13,5 @@ import org.springframework.stereotype.Service;
  * @since 1.1
  */
 @Service
-public class SpecTemplateService extends ServiceImpl<SpecTemplateMapper, SpecTemplate> implements ISpecTemplateService {
+public class SpecTemplateServiceImpl extends ServiceImpl<SpecTemplateMapper, SpecTemplate> implements ISpecTemplateService {
 }
