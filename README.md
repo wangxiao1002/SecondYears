@@ -24,6 +24,34 @@
 4. 启动前端 npm run dev
 ## 演示
 体验地址(个人服务器较小，暂无)
+
+1. EurakeServer 注册中心
+
+   ![EurakeServer](https://note.youdao.com/yws/api/personal/file/E97E19BE2E0E427CB08A44A0D3148BB3?method=download&shareKey=4cac55722846dc33bb9e591f1c25a50c)
+
+2.  monitor 监视服务
+
+   ![SpringAdmin](https://note.youdao.com/yws/api/personal/file/89CD7CB2E1CE4AA08385A229AFE9513D?method=download&shareKey=96580ab6bc52791f2a6ca54b9d0ad496)
+
+3. DockerFile
+
+   ```dockerfile
+   # Docker image for config-servers
+   # VERSION 0.0.1
+   # Author: wangxiao
+   # 基础镜像使用java
+   FROM java:8
+   # 将jar包添加到容器中并更名为app.jar
+   ADD auth-0.0.1-SNAPSHOT.jar auth.jar 
+   # 运行jar包
+   #RUN bash -c 'touch /auth.jar'
+   CMD java -jar auth.jar 
+   
+   # ENTRYPOINT ["java","-Dspring.config.profile=${profile}","-jar","/eurake-server.jar"]
+   ```
+
+   
+
 ## 项目进度和实现功能
 1. 基础服务（eurake config zuul） 构建 done
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
@@ -31,6 +59,7 @@
 3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 done
 4. sy-web doing -> cancle (服务器到期)
 5. Shope 商城 sku,spu 计算价格 done 微信支付done es搜索 done 使用百度查询快递(百度不支持顺丰 正在研究so.com) done
+7. Shope 实现秒杀功能 
 ## 直播（实现重点）
 1. 之前认为的直播是 后端推送二进制流，类似webSocket推送，结合netty 自定义协议，前端再去解析协议(错误的认知)
 2. obs:[obs推流](https://github.com/obsproject/obs-studio) 
@@ -41,9 +70,7 @@
 ## 项目构建部署
 1. Cloud Toolkit
 2. docker
-## 使用到的组件
+## 使用SpringCloud组件
 1. eurake Server 
 2. config Server
 3. spring admin
-
- 
