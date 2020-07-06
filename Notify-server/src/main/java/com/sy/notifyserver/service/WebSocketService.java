@@ -20,4 +20,7 @@ public interface WebSocketService {
      * @return List of WebSocketRoom
      */
     List<WebSocketRoom> querySocketRoomByCoordinate (double minX,double maxX,double minY,double maxY);
+
+
+
 }
