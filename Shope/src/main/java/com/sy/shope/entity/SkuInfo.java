@@ -2,9 +2,11 @@ package com.sy.shope.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.sy.shope.tools.Constants;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author: wang xiao
@@ -30,11 +32,19 @@ public class SkuInfo {
 
     private String indexes;
 
-    private String ownSpec;
-
-    private String enable;
+    private boolean enable;
 
     private String createTime;
 
     private String updateTime;
+
+
+    public void  copyProperties (Good good) {
+        this.title = good.getSpuNameZh();
+        this.enable = true;
+        this.indexes = null;
+        this.images = good.getImageUrl();
+        this.price = good.getPrice();
+        this.createTime = LocalDateTime.now().format(Constants.DATE_TIME_FORMATTER);
+    }
 }

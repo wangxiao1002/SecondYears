@@ -3,8 +3,10 @@ package com.sy.shope.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sy.shope.entity.Good;
+import com.sy.shope.entity.SkuInfo;
 import com.sy.shope.entity.SpecGroup;
 import com.sy.shope.service.facade.IGoodService;
+import com.sy.shope.service.facade.ISkuService;
 import com.sy.shope.service.facade.ISpecGroupService;
 import com.sy.shope.support.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,10 @@ public class AdminGoodController {
     private ISpecGroupService specGroupService;
 
 
+    @Autowired
+    private ISkuService skuService;
+
+
     @GetMapping("/{page}")
     public ResponseEntity<JsonResult<IPage<Good>>> getPageGood (@PathVariable long page) {
         IPage<Good> goodPage = goodService.page(new Page<Good>(page,10L));
@@ -51,6 +57,8 @@ public class AdminGoodController {
              */
             List<SpecGroup> specGroups = param.getSpecGroups();
             specGroupService.saveSpecGroup(param.getId(),specGroups);
+            List<SkuInfo> skuInfos = skuService.initSkuInfo(param);
+            skuService.saveBatch(skuInfos);
         }
         return ResponseEntity.ok(JsonResult.success(result));
     }

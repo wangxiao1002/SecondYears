@@ -1,7 +1,12 @@
 package com.sy.shope.service.facade;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sy.shope.entity.Good;
 import com.sy.shope.entity.SkuInfo;
+import com.sy.shope.entity.Spec;
+import com.sy.shope.entity.SpecGroup;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +25,13 @@ public interface ISkuService extends IService<SkuInfo> {
      * @return SkuInfo
      */
     SkuInfo querySkuBySpuIdAndIds(String spuId, String ids);
+
+
+    /**
+     * 根据规格 全排列sku信息
+     * @param good 商品
+     * @return skuInfos
+     */
+    List<SkuInfo> initSkuInfo (Good good);
 
 }

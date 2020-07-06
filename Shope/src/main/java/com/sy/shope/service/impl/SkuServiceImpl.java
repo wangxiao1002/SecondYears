@@ -1,13 +1,27 @@
 package com.sy.shope.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sy.shope.entity.Good;
 import com.sy.shope.entity.SkuInfo;
+
+import com.sy.shope.entity.Spec;
+import com.sy.shope.entity.SpecGroup;
 import com.sy.shope.mappers.SkuMapper;
 
 
 import com.sy.shope.service.facade.ISkuService;
+import com.sy.shope.tools.Constants;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author: wang xiao
@@ -19,10 +33,69 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuInfo> implements I
 
     @Override
     public SkuInfo querySkuBySpuIdAndIds(String spuId, String ids) {
-        QueryWrapper<SkuInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("indexes",ids)
-                .eq("spu_id",spuId)
-                .eq("enable","1");
-        return baseMapper.selectOne(queryWrapper);
+        return baseMapper.selectOne(Wrappers.<SkuInfo>lambdaQuery()
+                .eq(SkuInfo::getIndexes,ids)
+                .eq(SkuInfo::getSpuId,spuId)
+                .eq(SkuInfo::isEnable,true));
     }
+
+
+    @Override
+    public List<SkuInfo> initSkuInfo(Good good) {
+        deleteSkuBySpuId(good.getId());
+        List<SkuInfo> skuInfos = new ArrayList<>();
+        if (CollectionUtils.isEmpty(good.getSpecGroups())) {
+            SkuInfo oneInfo = new SkuInfo();
+            oneInfo.copyProperties(good);
+            skuInfos.add(oneInfo);
+            return skuInfos;
+        }
+        List<List<Spec>> specList = good.getSpecGroups().stream().map(SpecGroup::getSpecList).collect(Collectors.toList());
+        descartesRecursive(good.getId(),specList,0,skuInfos,new ArrayList<Spec>());
+        return skuInfos;
+    }
+
+
+    private boolean deleteSkuBySpuId (String spuId) {
+        return remove(Wrappers.<SkuInfo>lambdaQuery().eq(SkuInfo::getSpuId,spuId));
+    }
+
+
+    /**
+     * 笛卡尔积全排列
+     * @param spuId
+     * @param originalList
+     * @param position
+     * @param returnList
+     * @param cacheList
+     */
+    private  void descartesRecursive(String spuId,List<List<Spec>> originalList, int position, List<SkuInfo> returnList, List<Spec> cacheList) {
+        List<Spec> originalItemList = originalList.get(position);
+        for (int i = 0; i < originalItemList.size(); i++) {
+            List<Spec> childCacheList = (i == originalItemList.size() - 1) ? cacheList : new ArrayList<Spec>(cacheList);
+            childCacheList.add(originalItemList.get(i));
+            if (position == originalList.size() - 1) {
+                returnList.add(initSkuInfo(spuId,childCacheList));
+                continue;
+            }
+            descartesRecursive(spuId,originalList, position + 1, returnList, childCacheList);
+        }
+    }
+
+
+
+    private  SkuInfo initSkuInfo (String spuId,List<Spec> specs) {
+        String title = specs.stream().map(Spec::getName).collect(Collectors.joining("+"));
+        BigDecimal price = specs.stream().map(Spec::getPrice).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+        String ids = specs.stream().map(Spec::getId).collect(Collectors.joining(","));
+        SkuInfo skuInfo = new SkuInfo();
+        skuInfo.setSpuId(spuId);
+        skuInfo.setCreateTime(LocalDateTime.now().format(Constants.DATE_TIME_FORMATTER));
+        skuInfo.setTitle(title);
+        skuInfo.setPrice(price);
+        skuInfo.setEnable(true);
+        skuInfo.setIndexes(ids);
+        return skuInfo;
+    }
+
 }
