@@ -47,7 +47,7 @@ public class AdminGoodController {
         boolean result = goodService.save(param);
         if (result) {
             /**
-             * 保存之后先保存 specGroup 在保存Spec 然后通过笛卡尔积 计算Sku
+             * 保存之后先保存 specGroup 在保存Spec 
              */
             List<SpecGroup> specGroups = param.getSpecGroups();
             specGroupService.saveSpecGroup(param.getId(),specGroups);
@@ -73,4 +73,5 @@ public class AdminGoodController {
         }
         return ResponseEntity.ok(JsonResult.success(result));
     }
+
 }
