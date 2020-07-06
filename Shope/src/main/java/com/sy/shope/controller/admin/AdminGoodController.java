@@ -57,8 +57,7 @@ public class AdminGoodController {
              */
             List<SpecGroup> specGroups = param.getSpecGroups();
             specGroupService.saveSpecGroup(param.getId(),specGroups);
-            List<SkuInfo> skuInfos = skuService.initSkuInfo(param);
-            skuService.saveBatch(skuInfos);
+            skuService.initSkuInfo(param);
         }
         return ResponseEntity.ok(JsonResult.success(result));
     }

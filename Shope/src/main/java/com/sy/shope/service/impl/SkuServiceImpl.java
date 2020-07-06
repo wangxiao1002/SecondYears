@@ -1,6 +1,7 @@
 package com.sy.shope.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sy.shope.entity.Good;
 import com.sy.shope.entity.SkuInfo;
@@ -14,12 +15,14 @@ import com.sy.shope.service.facade.ISkuService;
 import com.sy.shope.tools.Constants;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -41,20 +44,30 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuInfo> implements I
 
 
     @Override
-    public List<SkuInfo> initSkuInfo(Good good) {
+    public boolean initSkuInfo(Good good) {
         deleteSkuBySpuId(good.getId());
         List<SkuInfo> skuInfos = new ArrayList<>();
         if (CollectionUtils.isEmpty(good.getSpecGroups())) {
             SkuInfo oneInfo = new SkuInfo();
             oneInfo.copyProperties(good);
             skuInfos.add(oneInfo);
-            return skuInfos;
+            return saveBatch(skuInfos);
         }
         List<List<Spec>> specList = good.getSpecGroups().stream().map(SpecGroup::getSpecList).collect(Collectors.toList());
         descartesRecursive(good.getId(),specList,0,skuInfos,new ArrayList<Spec>());
-        return skuInfos;
+        return saveBatch(skuInfos);
     }
 
+
+    @Override
+    public Page<SkuInfo> queryByPage(int page, int pageSize, String goodId) {
+        if (StringUtils.isEmpty(goodId)) {
+            return page(new Page<>(page,pageSize),Wrappers.<SkuInfo>lambdaQuery().orderByDesc(SkuInfo::getCreateTime));
+        }
+        return page(new Page<>(page,pageSize),Wrappers.<SkuInfo>lambdaQuery().orderByDesc(SkuInfo::getCreateTime)
+            .eq(SkuInfo::getSpuId,goodId));
+
+    }
 
     private boolean deleteSkuBySpuId (String spuId) {
         return remove(Wrappers.<SkuInfo>lambdaQuery().eq(SkuInfo::getSpuId,spuId));
@@ -97,5 +110,9 @@ public class SkuServiceImpl extends ServiceImpl<SkuMapper, SkuInfo> implements I
         skuInfo.setIndexes(ids);
         return skuInfo;
     }
+
+
+
+
 
 }
