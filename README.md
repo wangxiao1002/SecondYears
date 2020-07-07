@@ -49,8 +49,22 @@
    
    # ENTRYPOINT ["java","-Dspring.config.profile=${profile}","-jar","/eurake-server.jar"]
    ```
-
-   
+4. nginx.conf 
+ * 普通的conf不必多配置简单的负载均衡，主要使用Nginx给商城配置限流
+ * 在http 模块申明限流 (binary_remote_addr 二进制客户端地址，zone=mylimit (申明的限流空间mylimit 默认1M) rate 限流秒级100)
+ ```
+ limit_req_zone $binary_remote_addr zone=mylimit:10m rate=100r/s
+ ```
+ * Server模块使用 (默认使用露桶算法 低于20 快速转发)
+ ```
+   server {
+         location /test/ {
+             limit_req zone=mylimit burst=20 nodelay;
+    
+             proxy_passhttp://backend;
+         }
+     }
+ ```
 
 ## 项目进度和实现功能
 1. 基础服务（eurake config zuul） 构建 done
