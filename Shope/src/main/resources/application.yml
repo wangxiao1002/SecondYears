@@ -1,5 +1,5 @@
 server:
-  port: 38097
+  port: 38098
   servlet:
     context-path: /shope
 spring:
@@ -7,9 +7,9 @@ spring:
     name: ShopeApplication
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://127.0.0.1:3306/sy
+    url: jdbc:mysql://172.17.233.201:3306/sy
     username: root
-    password: root.
+    password: HEchuTIANya1.
     hikari:
       pool-name: ShopeDataSourcePool
       minimum-idle: 10
@@ -21,11 +21,11 @@ spring:
       connection-test-query: select 1
   elasticsearch:
     rest:
-      uris: 127.0.0.1:9200
+      uris: 172.17.233.201:9200
       connection-timeout: 1
       read-timeout: 30
 mybatis-plus:
-  mapper-locations: lasspath:mappers/*.xml
+  mapper-locations: classpath:mappers/*.xml
   global-config:
     db-config:
       id-type: ID_WORKER_STR
@@ -47,7 +47,7 @@ pay:
 socketio:
   # host: 192.168.1.178
   host: 127.0.0.1
-  port: 38082
+  port: 8098
   # 设置最大每帧处理数据的长度，防止他人利用大数据来攻击服务器
   maxFramePayloadLength: 1048576
   # 设置http交互最大内容长度
@@ -65,7 +65,7 @@ socketio:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:38090/eureka/,http://127.0.0.1:38091/eureka/
+      defaultZone: http://172.17.233.201:38090/eureka/,http://172.17.233.201:38091/eureka/
     # 从eureka 上获取服务列表时间 30
     registry-fetch-interval-seconds: 30
     # 复制实例变化信息到eureka服务器所需要的时间间隔
