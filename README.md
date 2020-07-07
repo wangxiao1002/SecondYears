@@ -59,7 +59,7 @@
  ```
    server {
          location /test/ {
-             limit_reqzone=mylimit burst=20 nodelay;
+             limit_req zone=mylimit burst=20 nodelay;
     
              proxy_passhttp://backend;
          }
