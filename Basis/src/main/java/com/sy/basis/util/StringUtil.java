@@ -26,5 +26,26 @@ public final class StringUtil {
     public static boolean isNotBlank(String source) {
         return !(isBlank(source));
     }
+
+    public static boolean isAsciiAlphanumeric(String  source) { {
+            if (source == null) {
+                return false;
+            }
+            int sz = source.length();
+            for (int i = 0; i < sz; i++) {
+                if ((!Character.isLetterOrDigit(source.charAt(i))) && (source.charAt(i) != ' ')) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    }
+
+    public static boolean isAsciiAlphanumeric(char  source) { {
+        return (!Character.isLetterOrDigit(source)) && (source != ' ');
+    }
+
+    }
     
 }
