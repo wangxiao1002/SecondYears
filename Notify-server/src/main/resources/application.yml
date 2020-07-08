@@ -1,8 +1,10 @@
 server:
-  port: 38095
+  port: 38099
+  servlet:
+    context-path: /notify
 spring:
   application:
     name: NotifyServerApplication
 push:
   server:
-    port: 38096
+    port: 38101
