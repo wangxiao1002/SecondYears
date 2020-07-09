@@ -78,7 +78,7 @@
 1. 之前认为的直播是 后端推送二进制流，类似webSocket推送，结合netty 自定义协议，前端再去解析协议(错误的认知)
 2. obs:[obs推流](https://github.com/obsproject/obs-studio) 
 3. nginx-http-flv-module[](https://github.com/winshining/nginx-http-flv-module)
-4. ![示例图片](https://github.com/winshining/nginx-http-flv-module/blob/master/samples/flv.js.png)
+4. 推流示例图片 ![示例图片](https://github.com/winshining/nginx-http-flv-module/blob/master/samples/flv.js.png)
 5. 整合Obs和flv module 两部分就可以实现直播，直播地址是flv流地址，以斗鱼为例：https://tc-tct.douyucdn2.cn/dyliveflv1a/606118r2gsAFhJK6_4000.flv?wsAuth=3120b69d0c6156a6322d5a1103c97498&token=web-h5-113948271-606118-58f5e9796237bc95d7b2b35fc16003e84790c61059478871&logo=0&expire=0&did=d75c4f240767caf64eddd3b400091501&ver=Douyu_220062405&pt=2&st=0&origin=all&mix=0&isp=
 6. flv 地址的有效性,当一个推流地址一直有效别人就可以随意观看，所以需要每隔一段时间在网页端切换推流地址
 ## 项目构建部署
