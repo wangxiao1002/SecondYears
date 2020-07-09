@@ -71,7 +71,7 @@
 3. 自定义缓存，日志异步收集、异步发邮件接口 done
 2. auth 认证功能实现，提供菜单、权限点配置授权和crud功能 done
 3. Notify/ 消息模块构建 实现单聊、群聊(done)和消息推送提醒功能 done
-4. sy-web doing -> cancle (服务器到期)
+4. sy-web 前端界面 doing -> cancle (服务器到期)
 5. Shope 商城 sku,spu 计算价格 done 微信支付done es搜索 done 使用百度查询快递(百度不支持顺丰 正在研究so.com) done
 7. Shope 实现秒杀功能 
 ## 直播（实现重点）
