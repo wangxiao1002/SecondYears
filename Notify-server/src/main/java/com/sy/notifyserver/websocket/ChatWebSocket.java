@@ -1,6 +1,6 @@
 package com.sy.notifyserver.websocket;
 
-import com.sy.notifyserver.util.JsonUtil;
+import com.sy.basis.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class ChatWebSocket {
         }
         // 暂时 不用线程池
         for (Session session : sessionList) {
-            session.getAsyncRemote().sendText(JsonUtil.convertString(message));
+            session.getAsyncRemote().sendText(JsonUtil.toJsonString(message));
         }
     }
 }
