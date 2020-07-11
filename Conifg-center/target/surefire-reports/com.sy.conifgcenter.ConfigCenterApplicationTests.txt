@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.sy.conifgcenter.ConfigCenterApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.705 s - in com.sy.conifgcenter.ConfigCenterApplicationTests
