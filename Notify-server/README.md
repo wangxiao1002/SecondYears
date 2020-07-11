@@ -25,6 +25,34 @@
     
 ```
 2.责任链
+* 将数据传递下去,用户并不关心数据传递过程 主要思想设置next 节点，当前节点不能满足数据处理时候传递下去
+```java
+abstract class Handler{
+    private Handler next;
+    public void setNext(Handler next){
+        this.next=next; 
+    }
+    public Handler getNext(){ 
+        return next; 
+    }   
+    //处理请求的方法
+    public abstract void handleRequest(String request);       
+}
+//具体处理者角色1
+class ConcreteHandler1 extends Handler{
+    public void handleRequest(String request){
+        if(request.equals("one")) {
+            System.out.println("处理者1 处理");       
+        } else {
+            // next 节点处理（个人感觉 modelView试图解析使用责任链模式（具体源码还未看在另一仓库准备更新源码日记））
+           getNext().handleRequest(request);    
+        } 
+    } 
+}
+```
 ## 敏感词
-Dfa
-
+DFA 算法实现敏感词过滤（copy csdn 代码源地址找不到了 侵删）
+## 直播封装
+* 真个直播流程有很好得开源组件来完成,上周完成OBS+nginx-http-flv-module 直播推流测试
+* 据业界人员说明，凡是大多数直播推流都是封装OBS，所以尝试用Java 封装外壳（或者放弃该模块）
+* 首要问题 联系JNI 调用类库
