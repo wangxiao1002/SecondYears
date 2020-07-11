@@ -33,10 +33,10 @@ public class ElasticService {
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
-    @PostConstruct
-    public void  initService () {
-        elasticsearchRestTemplate.indexOps(Good.class).create();
-    }
+//    @PostConstruct
+//    public void  initService () {
+//        elasticsearchRestTemplate.indexOps(Good.class).create();
+//    }
 
     /**
      * 查询且高亮
