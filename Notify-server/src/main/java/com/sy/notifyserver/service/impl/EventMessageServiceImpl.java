@@ -2,7 +2,9 @@ package com.sy.notifyserver.service.impl;
 
 
 
+import com.sy.basis.util.Constants;
 import com.sy.notifyserver.service.WeChatMessageService;
+import com.sy.notifyserver.util.WeChatMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -24,7 +25,7 @@ public class EventMessageServiceImpl implements WeChatMessageService {
 
 
 
-    private Logger log = LoggerFactory.getLogger(com.zd.platform.service.impl.EventMessageServiceImpl.class);
+    private Logger log = LoggerFactory.getLogger(EventMessageServiceImpl.class);
 
     private String remark = "逻辑狗家长端APP,加入学校后，可查看宝宝在校动态，接受校园通知，和老师交流互动";
 
@@ -68,27 +69,7 @@ public class EventMessageServiceImpl implements WeChatMessageService {
         }
         key = key.replace("qrscene_","");
         log.info("************** subscribe Received weChat  event key : {} ****************",key);
-        QrCodeBatch qrCodeBatch = qrCodeBatchService.queryByBatchIdAndNoUseKey(key);
-        if (Objects.isNull(qrCodeBatch)) {
-            return unSupportedMessage(param);
-        }
-        String openId = param.get("FromUserName");
-        qrCodeTicketService.updateQrCodeTicket(openId,key,qrCodeBatch.getId());
-        Map<String,Object> messageMap = new HashMap<>(8);
-        messageMap.put("toUserId",openId);
-        messageMap.put("appId",param.get("appId"));
-        Map<String,Object> dataMap = new HashMap<>(6);
-        dataMap.put("first","入园邀请码");
-        dataMap.put("keyword1",qrCodeBatch.getContent());
-        dataMap.put("keyword2",key);
-        dataMap.put("keyword3",qrCodeBatch.getCreateTime());
-        dataMap.put("remark",remark);
-        messageMap.put("data", initData(dataMap));
-        String appId = param.get("appId");
-        weChatService.pushMessage(appId,messageMap);;
-        qrCodeBatch.setUseNumber(qrCodeBatch.getUseNumber()+1);
-        qrCodeBatchService.updateById(qrCodeBatch);
-        UserInfoQueue.addElement(key,appId,openId);
+
         return Constants.SUCCESS;
     }
 
@@ -107,27 +88,6 @@ public class EventMessageServiceImpl implements WeChatMessageService {
             return unSupportedMessage(param);
         }
         log.info("************** SCAN Received weChat  event key : {} ****************",key);
-        QrCodeBatch qrCodeBatch = qrCodeBatchService.queryByBatchIdAndNoUseKey(key);
-        if (Objects.isNull(qrCodeBatch)) {
-            return unSupportedMessage(param);
-        }
-        String openId = param.get("FromUserName");
-        qrCodeTicketService.updateQrCodeTicket(openId,key,qrCodeBatch.getId());
-        Map<String,Object> messageMap = new HashMap<>(8);
-        messageMap.put("toUserId",openId);
-        messageMap.put("appId",param.get("appId"));
-        Map<String,Object> dataMap = new HashMap<>(6);
-        dataMap.put("first","入园邀请码");
-        dataMap.put("keyword1",qrCodeBatch.getContent());
-        dataMap.put("keyword2",key);
-        dataMap.put("keyword3",qrCodeBatch.getCreateTime());
-        dataMap.put("remark",remark);
-        messageMap.put("data", initData(dataMap));
-        String appId = param.get("appId");
-        weChatService.pushMessage(appId,messageMap);;
-        qrCodeBatch.setUseNumber(qrCodeBatch.getUseNumber()+1);
-        qrCodeBatchService.updateById(qrCodeBatch);
-        UserInfoQueue.addElement(key,appId,openId);
         return Constants.SUCCESS;
     }
     

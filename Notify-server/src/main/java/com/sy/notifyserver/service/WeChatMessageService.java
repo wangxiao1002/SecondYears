@@ -1,9 +1,9 @@
 package com.sy.notifyserver.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.zd.common.tools.WXMessage.WXMessageTools;
-import com.zd.common.tools.WXMessage.WXTextMessage;
+
+import com.sy.basis.util.Constants;
 import org.springframework.beans.factory.InitializingBean;
+
 
 import java.util.Map;
 
@@ -32,31 +32,7 @@ public interface WeChatMessageService extends InitializingBean {
      * @return java.lang.String
      */
     default String unSupportedMessage(Map<String,String> param) {
-        WXTextMessage wxTextMessage  = new WXTextMessage();
-        wxTextMessage.setContent(param.getOrDefault("Content","欢迎关注中德智慧教育,该二维码已经被激活，请您选择官方渠道商品，期待与你下次相遇"));
-        wxTextMessage.setCreateTime(System.currentTimeMillis());
-        wxTextMessage.setFuncFlag(0);
-        wxTextMessage.setMsgType("text");
-        wxTextMessage.setFromUserName(param.get("ToUserName"));
-        wxTextMessage.setToUserName(param.get("FromUserName"));
-        return WXMessageTools.textMessageXml(wxTextMessage);
+        return Constants.FAIL;
     }
 
-    /**
-     *  初始化消息模板data
-     * @author wangxiao
-     * @date 17:13 2020/7/9
-     * @param data
-     * @return java.lang.String
-     */
-    default JSONObject initData (Map<String,Object> data) {
-        JSONObject jsonObject = new JSONObject();
-        for (Map.Entry<String,Object> entry :data.entrySet()) {
-            JSONObject tempObject = new JSONObject();
-            tempObject.put("value",entry.getValue());
-            tempObject.put("color","#173177");
-            jsonObject.put(entry.getKey(),tempObject);
-        }
-        return jsonObject;
-    }
 }

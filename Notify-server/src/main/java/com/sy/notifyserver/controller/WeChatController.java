@@ -1,8 +1,11 @@
 package com.sy.notifyserver.controller;
 
+import com.sy.basis.util.Constants;
+import com.sy.basis.util.WeChatMessageUtil;
+import com.sy.notifyserver.service.WeChatMessageService;
+import com.sy.notifyserver.util.WeChatMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +19,6 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/weChat")
-@Api(value = "WeChatController", tags ="微信")
 public class WeChatController {
 
     private final Logger logger = LoggerFactory.getLogger(WeChatController.class);
@@ -32,7 +34,8 @@ public class WeChatController {
                               @RequestParam(required = false) String echostr) {
         logger.info("********************************{},{},{},{},{}",appId,signature,timestamp,nonce,echostr);
 
-        return WeChatMessageUtil.checkSignature("luojigou", signature, timestamp, nonce) ? echostr : null;
+        return WeChatMessageUtil.checkSignature("sy-token-EOSSIUBYTRUR", signature, timestamp, nonce) ?
+                echostr : null;
     }
 
 
@@ -41,7 +44,8 @@ public class WeChatController {
     @PostMapping(value = "/receive/{appId}")
     public String receiveWeChatMessage (@PathVariable String appId, HttpServletRequest request) throws Exception {
         request.setCharacterEncoding("UTF-8");
-        Map<String, String> respMap = wxMessageTools.parseXml(request);
+      //  wxMessageTools.parseXml(request)
+        Map<String, String> respMap =null;
         String msgType = respMap.get("MsgType");
         respMap.put("appId",appId);
         WeChatMessageService messageService = WeChatMessageFactory.getService(msgType);
