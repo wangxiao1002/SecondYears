@@ -50,7 +50,7 @@ public class EventMessageServiceImpl implements WeChatMessageService {
     /**
      * 所有事件函数 集合
      */
-    private Map<String, Function<Map<String,String>,String> > eventMap = new HashMap<>();
+    private final Map<String, Function<Map<String,String>,String> > eventMap = new HashMap<>();
 
 
     /**
