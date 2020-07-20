@@ -86,5 +86,10 @@
 2. docker
 ## 使用SpringCloud组件
 1. eurake Server 
+
 2. config Server
+
 3. spring admin
+
+## 结语
+原本想把项目做成直播系统，但最近由于众多原因（资金和时间）,其实更重要的是因为个人水平不够，挑战一些源码时候看不懂，所以决定学习一波源码，重构基础。搁浅直播
