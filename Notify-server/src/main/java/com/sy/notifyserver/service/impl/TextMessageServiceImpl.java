@@ -1,8 +1,9 @@
 package com.sy.notifyserver.service.impl;
 
 
-import com.zd.platform.service.WeChatMessageService;
-import com.zd.platform.support.WeChatMessageFactory;
+
+import com.sy.notifyserver.service.WeChatMessageService;
+import com.sy.notifyserver.util.WeChatMessageFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
