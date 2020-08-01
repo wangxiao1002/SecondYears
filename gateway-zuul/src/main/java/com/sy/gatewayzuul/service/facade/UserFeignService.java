@@ -1,6 +1,7 @@
 package com.sy.gatewayzuul.service.facade;
 
 import com.sy.basis.domain.LoginDO;
+import com.sy.gatewayzuul.config.FeignDefaultConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,7 @@ import java.util.List;
   * @Author wangxiao
   **/
 
- @FeignClient(value="authApplication",path = "/auth")
+ @FeignClient(value="authApplication",path = "/auth",configuration = FeignDefaultConfig.class)
 public interface UserFeignService {
 
     /**
