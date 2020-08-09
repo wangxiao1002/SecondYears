@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 
-@EnableZuulServer
-@EnableEurekaClient
-@EnableFeignClients
-@SpringBootApplication
 /**
  * @Author wangxiao
  * @Description // zuul
  **/
+@EnableZuulServer
+@EnableEurekaClient
+@EnableFeignClients
+@SpringBootApplication
 
 public class GatewayZuulApplication {
 
