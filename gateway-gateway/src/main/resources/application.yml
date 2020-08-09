@@ -20,6 +20,10 @@ spring:
           filters: # 过滤器，对请求进行拦截，实现自定义的功能，对应 FilterDefinition 数组
             - StripPrefix=1
             - RewritePath=/user-service/(?<remaining>.*), /${remaining} # 将 /user-service 前缀剔除
+        - id: userServer
+          uri: lb://userServer
+          predicates: /userServer/**
+
       # 与 Spring Cloud 注册中心的集成，对应 DiscoveryLocatorProperties 类
       discovery:
         locator:
