@@ -2,9 +2,9 @@ package com.sy.basis.util;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.*;
 
 /**
  * 日期工具
@@ -55,11 +55,11 @@ public class DateUtil {
     }
 
     public static String toDay () {
-        return LocalDate.now().format(Constants.DATE_FORMATTER);
+        return LocalDate.now().format(DATE_FORMATTER);
     }
 
     public static String toDayTime () {
-        return LocalDateTime.now().format(Constants.DATE_TIME_FORMATTER);
+        return LocalDateTime.now().format(DATE_TIME_FORMATTER);
     }
 
     public static boolean ifSaturday() {
@@ -106,12 +106,12 @@ public class DateUtil {
         return daysBetween(monday,sunday);
     }
 
-    public static List<String> daysBetween (LocalDate beginDate,LocalDate endDate) {
+    public static List<String> daysBetween (LocalDate beginDate, LocalDate endDate) {
         long daysBetween = ChronoUnit.DAYS.between(beginDate, endDate);
         List<String> weekDates = new ArrayList<String>((int) daysBetween);
         for(int i = 0; i <= daysBetween; i++){
             LocalDate tempDate = beginDate.plusDays(i);
-            weekDates.add(tempDate.format(Constants.DATE_FORMATTER));
+            weekDates.add(tempDate.format(DATE_FORMATTER));
         }
         return weekDates;
     }
