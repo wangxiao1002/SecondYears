@@ -1,58 +1,46 @@
 package com.sy.basis.util;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
-import java.util.*;
-
 /**
- * 日期工具
- * @author wangxiao
- * @since 1.1
+ * @author wang xiao
+ * @date Created in 11:26 2020/7/27
  */
 public class DateUtil {
 
-    private DateUtil() {}
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-    private static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.CHINA);
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    /**
-     *  格式化日期时间
-     * @param dateTime 日期时间
-     * @return String
-     */
-    public static String formatDateTime (LocalDateTime dateTime) {
-        return dateTime.format(DATE_TIME_FORMATTER);
-    }
+    public static final DateTimeFormatter TIME_FORMATTER  = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static final ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
+
 
     /**
-     *  转换日期时间
-     * @param dateTime 日期时间
-     * @return String
+     *  下面四个方法放在这里是因为 共用 ZoneId 其实没必要合在一起
+     * @author wangxiao
      */
-    public static LocalDateTime parseDateTime (String dateTime) {
-        return LocalDateTime.parse(dateTime,DATE_TIME_FORMATTER);
+    public static long toEpochMilli (LocalDateTime localDateTime) {
+        return localDateTime.atZone(ZONE_ID).toInstant().toEpochMilli();
     }
 
-    /**
-     *  格式化日期
-     * @param localDate 日期
-     * @return String
-     */
-    public static String formatDate (LocalDate localDate) {
-        return localDate.toString();
+    public static long toEpochMilli (LocalDate localDate) {
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.now());
+        return localDateTime.atZone(ZONE_ID).toInstant().toEpochMilli();
     }
 
-    /**
-     *  转换日期
-     * @param date 日期
-     * @return String
-     */
-    public static LocalDate parseDate (String date) {
-        return LocalDate.parse(date,DATE_FORMATTER);
+    public static long toEpochMilli (LocalDate localDate,LocalTime localTime) {
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+        return localDateTime.atZone(ZONE_ID).toInstant().toEpochMilli();
     }
+
+    public static LocalDate parseMilliToLocalDate (long timestamp) {
+        return Instant.ofEpochMilli(timestamp).atZone(ZONE_ID).toLocalDate();
+    }
+    public static LocalDateTime parseMilliToLocalDateTime (long timestamp) {
+        return Instant.ofEpochMilli(timestamp).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+    }
+
+
 
     public static String toDay () {
         return LocalDate.now().format(DATE_FORMATTER);
@@ -62,12 +50,12 @@ public class DateUtil {
         return LocalDateTime.now().format(DATE_TIME_FORMATTER);
     }
 
-    public static boolean ifSaturday() {
-        LocalDate nowDate = LocalDate.now();
+    public static boolean ifSaturday(String  dateText) {
+        LocalDate nowDate = LocalDate.parse(dateText);
         return DayOfWeek.SATURDAY.equals(nowDate.getDayOfWeek());
     }
-    public static boolean ifSunday() {
-        LocalDate nowDate = LocalDate.now();
+    public static boolean ifSunday(String dateText) {
+        LocalDate nowDate = LocalDate.parse(dateText);
         return DayOfWeek.SUNDAY.equals(nowDate.getDayOfWeek());
     }
 
@@ -85,7 +73,7 @@ public class DateUtil {
     }
 
     public static LocalDate weekEnd () {
-        return LocalDate.now().with(TemporalAdjusters.previousOrSame( DayOfWeek.SUNDAY));
+        return LocalDate.now().with(TemporalAdjusters.nextOrSame( DayOfWeek.SUNDAY));
     }
 
     public static String weekBeginStr () {
@@ -94,7 +82,17 @@ public class DateUtil {
     }
 
     public static String weekEndStr () {
-        return LocalDate.now().with(TemporalAdjusters.previousOrSame( DayOfWeek.SUNDAY))
+        return LocalDate.now().with(TemporalAdjusters.nextOrSame( DayOfWeek.SUNDAY))
+                .format(DATE_FORMATTER);
+    }
+
+    public static String weekBeginStr (String dateText) {
+        return LocalDate.parse(dateText).with(TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY))
+                .format(DATE_FORMATTER);
+    }
+
+    public static String weekEndStr (String dateText) {
+        return LocalDate.parse(dateText).with(TemporalAdjusters.nextOrSame( DayOfWeek.SUNDAY))
                 .format(DATE_FORMATTER);
     }
 
@@ -105,8 +103,14 @@ public class DateUtil {
         LocalDate sunday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY ));
         return daysBetween(monday,sunday);
     }
+    public static List<String> weekDate (String dateText) {
+        LocalDate today = LocalDate.parse(dateText);
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY));
+        LocalDate sunday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY ));
+        return daysBetween(monday,sunday);
+    }
 
-    public static List<String> daysBetween (LocalDate beginDate, LocalDate endDate) {
+    public static List<String> daysBetween (LocalDate beginDate,LocalDate endDate) {
         long daysBetween = ChronoUnit.DAYS.between(beginDate, endDate);
         List<String> weekDates = new ArrayList<String>((int) daysBetween);
         for(int i = 0; i <= daysBetween; i++){
@@ -118,7 +122,17 @@ public class DateUtil {
 
 
 
+    public static boolean ifBeforeToDay (String dateStr) {
+        LocalDate now =  LocalDate.now();
+        LocalDate gameDate = LocalDate.parse(dateStr);
+        return gameDate.isEqual(now) || gameDate.isBefore(now);
+    }
 
+    public static boolean isAfterToday (String dateStr) {
+        LocalDate now =  LocalDate.now();
+        LocalDate gameDate = LocalDate.parse(dateStr);
+        return  gameDate.isAfter(now);
+    }
 
 
 }
