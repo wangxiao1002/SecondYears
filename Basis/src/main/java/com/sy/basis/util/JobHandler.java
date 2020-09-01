@@ -1,3 +1,5 @@
+package com.sy.basis.util;
+
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.zd.gamecontest.support.Constants;
 import com.zd.gamecontest.support.GameContestJob;
